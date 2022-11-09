@@ -7,8 +7,14 @@ function SignUp() {
     var [userpassword, setPassword] = React.useState("");
     var [user, setUser] = React.useState("");
 
+    const logout = () => {
+        Axios.post('http://localhost:3001/logout', {}).then((response) => {
+            console.log(response)
+        })
+    }
+        
     const signin = () => {
-        Axios.post('http://localhost:3001/signup', { 
+        Axios.post('http://localhost:3001/register', { 
             username: user,
             mail: useremail, 
             password: userpassword,
@@ -25,7 +31,7 @@ function SignUp() {
                     <input 
                         type="text" 
                         name="username" 
-                        placeholder="enter your username" 
+                        placeholder="Enter username" 
                         onChange={(e) => { 
                             setUser(e.target.value)
                         }}
@@ -33,7 +39,7 @@ function SignUp() {
                     <input 
                         type="text" 
                         name="mail" 
-                        placeholder="enter your email" 
+                        placeholder="Enter email" 
                         onChange={(e) => { 
                             setEmail(e.target.value)
                         }}
@@ -41,12 +47,16 @@ function SignUp() {
                     <input 
                         type="password" 
                         name="password" 
-                        placeholder="enter your password" 
+                        placeholder="Enter password" 
                         onChange={(e) => { 
                             setPassword(e.target.value)
                         }}
                     /><br />
                     <input type="submit" id="submit" onClick={signin} value="Sign Up"/>
+                    <p><a href="/login">Log In</a></p>
+                    <p><a href="/logout">Log Out</a></p>
+                    
+                                        
             </header>
         </div>
         </>

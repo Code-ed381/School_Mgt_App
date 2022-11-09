@@ -6,11 +6,13 @@ const passport = require('passport');
 const bodyParser = require('body-parser')
 const LocalStrategy = require('passport-local').Strategy;
 const crypto = require('crypto');
+const cookieParser = require('cookie-parser');
 var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session)
 
 app.use(express.json())
 app.use(cors())
+// app.use(cookieParser)
 
 const PORT = process.env.PORT || 3001;
 
@@ -20,9 +22,8 @@ app.use(session({
   secret: 'shadow',
   store: new MySQLStore({
     host: 'localhost',
-    port: 3306,
     user: 'root',
-    database: 'cookie-user'
+    database: 'cookie_user' 
   }),
   resave: false,
   saveUninitialized: false,
@@ -37,6 +38,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -55,8 +58,8 @@ con.connect(function(err) {
 });
 
 const customFields = {
-  usernameField:'uname',
-  passwordField:'pw',
+  usernameField:'username',
+  passwordField:'password',
 };
 
 /*Passport JS*/
@@ -67,10 +70,10 @@ const verifyCallback = (username, password, done) => {
     if (results.length == 0) {
       return done(null, false);
     }
-    const isValid = validPassword(password, result[0].hash, results[0].salt);
+    const isValid = validPassword(password, results[0].hash, results[0].salt);
     user = {id:results[0].id,username:results[0].username,hash:results[0].hash,salt:results[0].salt};
     if(isValid){
-      return done(dull,user);
+      return done(null,user);
     }
     else {
       return done(null,false)
@@ -123,7 +126,7 @@ function isAdmin(req,res,next) {
 }
 
 function userExists(req,res,next){
-  con.query('SELECT * FROM users WHERE username=?', [req.body.uname], function(error, results, fields) {
+  con.query('SELECT * FROM users WHERE username=?', [req.body.username], function(error, results, fields) {
     if (error) {
       console.log("Error")
     }
@@ -152,38 +155,42 @@ function userExists(req,res,next){
 //   })
 // }))
 
+//Routes
 app.get("/", (req, res, next) => {
-  res.send("<h1>Home</h1><p>Please <a href='/register'>Register</a></p>")  
+ 
 })
 
-app.get('/login', (req, res, next) => {
-  res.render('login')
-})
+// app.post('/login/password', passport.authenticate('local'), (req, res, next) => {
+//   res.send('ok')
+// })
 
 app.get("/welcome", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
 
-app.get('logout', (req, res, next) => {
-  req.logOut();
-  res.redirect('/protected-route');
+app.get('/logout', (req, res, next) => {
+  req.logOut((err) => {
+    if (err) { return next(err); }
+    res.redirect('/');
+  })
 });
 
 app.get('/login-success', (req, res, next) => {
-  res.send('<p>You successfully logged in. --> <a href="/protected-route">Go to protected route</a></p>')
+  res.json({ message: 'Logged in'})
 })
 
 app.get('/login-failure', (req, res, next) => {
-  res.send('You entered the wrong password');
+  res.json({ message: 'You entered the wrong password' });
 });
 
-app.get('register', (req, res, next) =>{
+app.get('/register', (req, res, next) =>{
   console.log("Inside get");
-  res.render('register')
+  res.json({ message:'Successfully registered' })
+  console.log(rep.body.username)
 })
 
 
-app.post("/login/password", 
+// app.post("/login/password", 
 //   (req, res) => {
 //     const username = req.body.username
 //     const email = req.body.mail
@@ -195,12 +202,56 @@ app.post("/login/password",
 //   }
 //   )
 // }
-  passport.authenticate('local', { failureRedirect: '/login', failureMessage: true}),
-  function(req, res) {
-    res.redirect('/~' + req.user.username)
-  }
-)
-;
+//   passport.authenticate('local', { failureRedirect: '/login', failureMessage: true}),
+//   function(req, res) {
+//     res.redirect('/~' + req.user.username)
+//   }
+// )
+// ;
+
+app.post('/register', userExists, (req,res,next) => {
+  console.log("Inside post");
+  console.log(req.body.password);
+  const saltHash = genPassword(req.body.password);
+  console.log(saltHash);
+  const salt = saltHash.salt;
+  const hash = saltHash.hash;
+
+  con.query('INSERT INTO users(username,hash,salt,isAdmin) VALUES(?,?,?,0)', [req.body.username,hash,salt], function(error, results, fields){
+    if (error) {
+      console.log(error)
+    }
+    else {
+      console.log('Successfully entered')
+    }
+  });
+  res.redirect('/login')
+});
+
+app.post('/login/password', passport.authenticate('local',{failureRedirect:'/login-failure',successRedirect:'/login-success'}));
+
+app.get('/protected-route', isAuth,(req, res, next)=>{
+  res.json({ message: "Logout" });
+});
+
+app.get('/admin-route',isAdmin,(req,res,next)=>{
+  res.json({ message: "Logout and reload" });
+})
+
+app.get('/notAuthorized', (req,res,next) => {
+  console.log("Inside get");
+  res.json({ message:'' })
+})
+
+app.get('/notAuthorizedAdmin', (req,res,next)=> {
+  console.log("Inside get");
+  res.json({ message:"Retry to log in as admin"});
+});
+
+app.get('/userAlreadyExists', (req,res,next)=>{
+  console.log("Inside get");
+  res.json({ message:"Register with different username"});
+});
 
   
 app.listen(PORT, () => {
