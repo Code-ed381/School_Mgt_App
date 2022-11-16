@@ -1,8 +1,9 @@
 import React from "react";
-import Home from './home';
-import SignUp from './signup';
-import Login from "./login";
-import { BrowserRouter as Router,Routes, Route, Navigate } from "react-router-dom";
+import Home from './components/home';
+// import SignUp from './components/signup';
+import Login from "./components/login";
+// import Main from "./components/main";
+import { BrowserRouter as Router,Routes, Route } from "react-router-dom";
 
 
 function App() {
@@ -10,8 +11,14 @@ function App() {
     <Router>
       <Routes>
       <Route exact path='/' element={<Home/>}/>  
-        
-      <Route path='/login' element={<Login />} />
+      <Route exact path='/addtask' element={<Home/>}/>  
+      <Route path='/todos' element={<Login />} />
+
+      {/* 
+
+      <Route path='/register' element={<SignUp />} />
+
+      <Route path='/welcome' element={<Main />} />
 
       <Route path='/logout' element={<Navigate to='/logout' />} />
 
@@ -21,7 +28,7 @@ function App() {
 
       <Route path='/protected-route' element={<Navigate to='/protected-route' />} />
         
-      <Route path='/signup' element={<SignUp/>}/>
+      <Route path='/signup' element={<SignUp/>}/> */}
 
       
       {/* <Route path="*" element={<Navigate to='/welcome' replace/>}/> */}

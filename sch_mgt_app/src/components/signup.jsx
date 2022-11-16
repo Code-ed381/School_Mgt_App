@@ -1,11 +1,12 @@
-import React from "react";
+import { useState } from "react";
 import Axios from "axios";
 // import $ from "jquery";
 
 function SignUp() {
-    var [useremail, setEmail] = React.useState("");
-    var [userpassword, setPassword] = React.useState("");
-    var [user, setUser] = React.useState("");
+    var [useremail, setEmail] = useState("");
+    var [userpassword, setPassword] = useState("");
+    var [user, setUser] = useState("");
+    const[message, setMessage] = useState('')
 
     const logout = () => {
         Axios.post('http://localhost:3001/logout', {}).then((response) => {
@@ -13,13 +14,17 @@ function SignUp() {
         })
     }
         
-    const signin = () => {
+    const signup = () => {
         Axios.post('http://localhost:3001/register', { 
             username: user,
             mail: useremail, 
             password: userpassword,
         }).then((response) => {
-            console.log(response)
+            if (response.data.message) {
+                setMessage(response.data.message)
+                window.location = '/login'
+                console.log(message)
+            }
         })
     }
 
@@ -52,7 +57,7 @@ function SignUp() {
                             setPassword(e.target.value)
                         }}
                     /><br />
-                    <input type="submit" id="submit" onClick={signin} value="Sign Up"/>
+                    <input type="submit" id="submit" onClick={signup} value="Sign Up"/>
                     <p><a href="/login">Log In</a></p>
                     <p><a href="/logout">Log Out</a></p>
                     
