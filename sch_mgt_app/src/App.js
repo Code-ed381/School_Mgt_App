@@ -1,19 +1,18 @@
 import React from "react";
-import Home from './components/home';
-// import SignUp from './components/signup';
+// import Home from './components/home';
+import SignUp from './components/signup';
 import Login from "./components/login";
-// import Main from "./components/main";
+import Main from "./components/main";
 import { BrowserRouter as Router,Routes, Route } from "react-router-dom";
 
 
-function App() {
+function App() { 
   return (
     <Router>
       <Routes>
-      <Route exact path='/' element={<Home/>}/>  
-      <Route exact path='/addtask' element={<Home/>}/>  
-      <Route path='/todos' element={<Login />} />
-
+      <Route exact path='/' element={<Main />}/>  
+      <Route exact path='/register' element={<SignUp/>}/>  
+      <Route path='/login' element={<Login />} />
       {/* 
 
       <Route path='/register' element={<SignUp />} />

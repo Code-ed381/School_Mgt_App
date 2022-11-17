@@ -13,7 +13,7 @@ function Home() {
 
 const [task, setTask] = useState([]);
 
-const navigate = useNavigate()
+const navigate = useNavigate() 
 
 const handleChange = (e) => {
   setTask(e.target.value)
