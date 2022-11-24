@@ -23,7 +23,7 @@ con.connect(function(err) {
   else {
     throw err;
   }
-});
+}); 
 
 app.get("/", (req, res, next) => {
   res.json({ message: "Student registered successfully" });

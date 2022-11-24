@@ -1,76 +1,73 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
-// import $ from "jquery";
 
 function Login() {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState('');
+    const [mail, setMail] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
 
-    // const navigate = useNavigate() 
-
-    // useEffect(() => {
-    //     const fetchAllData = async ()=> {
-    //         try {
-    //             const res = await Axios.get('http://localhost:3001/login/students')
-    //             setData(res.data)
-    //         } catch (err) {
-    //             console.log(err)
-    //         }
-    //     }
-    //     fetchAllData()
-    // }, []);
 
     //Get the values from the database using ajax
+    const navigate = useNavigate() 
+
     const handleClick = async (e)=> {
         e.preventDefault()
         try {
             const res = await Axios.get('http://localhost:3001/login/students')
             setData(res.data)
-            const dattta = res.data
-            dattta.map((item)=> {setData(item)})
-            console.log(dattta[1].email)
+
+            let email_list = []
+            let pass_list = []
+            for(var i = 0; i < data.length; i++) {
+                email_list.push(data[i].email)
+                pass_list.push(data[i].password)
+            }
+
+            if (email_list.includes(mail) && pass_list.includes(password)) {
+                setMessage("Successfully logged in")
+                setTimeout(() => {
+                    navigate('/')
+                }, 2000);
+            }
+            else {
+                setMessage('Incorrect Email or Password')
+                setTimeout(() => {
+                    navigate(0)
+                }, 2000);
+            }
         }
         catch(err) {
             console.log(err)
         }
     }
 
-    
-    ///// Delete ajax request for todo
-    // const handleDelete = async (id)=> {
-    //     try{
-    //         await Axios.delete('http://localhost:3001/todos/'+id)
-    //         window.location.reload()
-    //     }
-    //     catch(err) {
-    //         console.log(err)
-    //     }
-    // }
-
     return (
         <>
         <div className="App">
             <header className="App-header">
                 <h2>Login</h2>
-                    <input 
-                        type="mail" 
-                        name="mail" 
-                        placeholder="Enter your email" 
-                        // onChange={(e) => { 
-                        //     setMail(e.target.value)
-                        // }}
-                    /><br />
-                    <input 
-                        type="password" 
-                        name="password" 
-                        placeholder="Enter your password" 
-                        // onChange={(e) => { 
-                        //     setPassword(e.target.value)
-                        // }}
-                    /><br />
-                    <input type="submit" id="submit" onClick={handleClick} value="Log in"/>
-                    <p><a href="/login">Sign Up</a></p>
-                    <p><a href="/logout">Log In</a></p>
+                <h3>{message}</h3>
+                <input 
+                    type="mail" 
+                    name="mail" 
+                    placeholder="Enter your email" 
+                    onChange={(e) => { 
+                        setMail(e.target.value)
+                    }}
+                /><br />
+                <input 
+                    type="password" 
+                    name="password" 
+                    placeholder="Enter your password" 
+                    onChange={(e) => { 
+                        setPassword(e.target.value)
+                    }}
+                /><br />
+                <input type="submit" id="submit" onClick={handleClick} value="Log in"/>
+                <p><a href="/signup">Sign Up</a></p>
+                <p><a href="/logout">Log In</a></p>
             </header>
         </div>
         </>
