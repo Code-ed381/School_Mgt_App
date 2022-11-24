@@ -9,13 +9,13 @@ function SignUp() {
     const [lastname, setLastName] = useState("");
     const [mail, setMail] = useState("");
     const [password, setPassword] = useState("");
-    const [message, setMessage] = useState('')
+    // const [message, setMessage] = useState('')
 
-    const logout = () => {
-        Axios.post('http://localhost:3001/logout', {}).then((response) => {
-            console.log(response)
-        })
-    }
+    // const logout = () => {
+    //     Axios.post('http://localhost:3001/logout', {}).then((response) => {
+    //         console.log(response)
+    //     })
+    // }
 
     // const handleChange = (e) => {
     //     setTask(e.target.value)
@@ -103,8 +103,7 @@ function SignUp() {
                         }}
                     /><br />
                     <input type="submit" id="submit" onClick={handleClick} value="Sign Up"/>
-                    <p><a href="/login">Sign Up</a></p>
-                    <p><a href="/logout">Log In</a></p>
+                    <p><a href="/login">Log In</a></p>
             </header>
         </div>
         </>
