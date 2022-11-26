@@ -26,11 +26,11 @@ function SignUp() {
     const handleClick = async (e)=> {
         e.preventDefault()
         try {
-            await Axios.post('http://localhost:3001/signup', {
-                firstname: firstname,
-                middlename: middlename,
-                lastname: lastname,
-                mail: mail, 
+            await Axios.post('http://localhost:3001/signup/new', {
+                // firstname: firstname,
+                // middlename: middlename,
+                // lastname: lastname,
+                username: mail, 
                 password: password,
             })
             navigate('/')
