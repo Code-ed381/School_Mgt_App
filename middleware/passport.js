@@ -30,7 +30,7 @@ const verifyCallback = (username, password, done)=> {
             return  done(null, user);
         }
         else {
-            return done(null, user);
+            return done(null, false);
         }
     })
 }

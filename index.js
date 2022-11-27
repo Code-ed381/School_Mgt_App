@@ -13,12 +13,15 @@ const session = require("express-session");
 app.use(express.json())
 app.use(cors())
 app.use(set_session)
-app.use(passport.initialize(session))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded())
+app.use(bodyParser.urlencoded()) 
+app.use(express.static('./public'))
+app.set('view engine', 'ejs')
 
 
-
+  
 con.connect(function(err) {
   if (!err) { 
     console.log("Connected!")
