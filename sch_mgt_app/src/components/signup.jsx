@@ -9,7 +9,7 @@ function SignUp() {
     const [lastname, setLastName] = useState("");
     const [mail, setMail] = useState("");
     const [password, setPassword] = useState("");
-    // const [message, setMessage] = useState('')
+    const [message, setMessage] = useState('')
 
     // const logout = () => {
     //     Axios.post('http://localhost:3001/logout', {}).then((response) => {
@@ -26,6 +26,15 @@ function SignUp() {
     const handleClick = async (e)=> {
         e.preventDefault()
         try {
+            const res = await Axios.get('http://localhost:3001/userAlreadyExists')
+            setMessage(res.data.message)
+        
+        }
+        catch(err) {
+            console.log(err)
+        }
+
+        try {
             await Axios.post('http://localhost:3001/signup/new', {
                 // firstname: firstname,
                 // middlename: middlename,
@@ -33,13 +42,22 @@ function SignUp() {
                 username: mail, 
                 password: password,
             })
-            navigate('/')
+            navigate('/login')
         }
         catch(err) {
             console.log(err)
         }
     }
-      
+    
+    const logout = async (e)=>{
+        e.preventDefault()
+        try {
+            await Axios.get('http://localhost:3001/logout')
+        }
+        catch(err) {
+            console.log(err)
+        }
+    }
         
     // const signup = () => {
     //     Axios.post('http://localhost:3001/signup', { 
@@ -62,6 +80,7 @@ function SignUp() {
         <div className="App">
             <header className="App-header">
                 <h2>Sign Up</h2>
+                <h5>{message}</h5>
                     <input 
                         type="text" 
                         name="firstname" 
@@ -103,7 +122,9 @@ function SignUp() {
                         }}
                     /><br />
                     <input type="submit" id="submit" onClick={handleClick} value="Sign Up"/>
+                    <input type="submit" id="logout" onClick={logout} value="Log out"/>
                     <p><a href="/login">Log In</a></p>
+                    <p><a href="/logout">Log out</a></p>
             </header>
         </div>
         </>
