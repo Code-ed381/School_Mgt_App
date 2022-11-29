@@ -10,7 +10,9 @@ const app = express.Router();
 app.post('/signup/newuser',userExists, registerView)
 
 //Read
-app.post('/login', auth);
+app.post('/login/password', auth, (req, res, next)=> {
+    console.log(res)
+});
 
 app.get('/login', (req, res, next) => {
     res.render('login')
@@ -21,22 +23,21 @@ app.get('/signup', (req, res, next) => {
 })
 
 app.get('/', isAuth, (req, res, next) => {
-    res.render('homepage')
+    res.send({ message: 'authorized'})
 })
 
 app.get('/login-success', (req, res, next)=> {
-    res.redirect('/')
+    res.json({message: 'success'})
 })
 
 app.get('/login-failure', (req, res, next)=> {
-    res.redirect('/login')
-    console.log('Invalid password')
+    res.json({message: 'invalid'})
 })
 
 app.get('/logout', (req, res, next)=> {
     req.logout(function(err) {
         if (err) { console.log(error) }
-        res.redirect('/login')
+        res.json({message: 'Logged out'})
     });
 })
 
@@ -44,9 +45,9 @@ app.get('/userAlreadyExists', (req, res, next)=> {
     res.json({message: "User already exists"})
 })
 
-app.get('/notAuthorized', (req, res, next)=> {
-    res.redirect('/login')
-})
+// app.get('/notAuthorized', (req, res, next)=> {
+//     res.redirect('/login')
+// })
 
 app.get('/protected-route', isAuth, (req, res, next)=> {
     res.send('This route is protected')

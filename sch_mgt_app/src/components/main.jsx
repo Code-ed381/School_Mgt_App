@@ -11,14 +11,18 @@ function Main() {
     // }, []);
 
     useEffect(()=> {
-        const fetchdata = async()=> {
-          const data = await Axios.get('http://localhost:3001/')
-          setMessage(data.message)
+          Axios.get('http://localhost:3001/')
+          .then((res)=> {
+            if (res.data.message === 'authorized') {
+              console.log(res.data.message)
+              setMessage(res.data.message)
+            }
+            else {
+              window.location = '/login' 
+            }
+          })
         }
-
-        fetchdata()
-          .catch(console.error);
-    }, [])
+      )
 
     
 

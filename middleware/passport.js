@@ -63,7 +63,8 @@ const isAuth = (req, res, next)=> {
         next()
     }
     else{
-        res.redirect('/notAuthorized')
+        res.json({ message: 'not authorized'})
+        // res.redirect('/notAuthorized')
     }
 }
 

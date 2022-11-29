@@ -17,71 +17,35 @@ function Login() {
 
         Axios.get('http://localhost:3001/logout')
         .then((res)=>{
-            setMessage(res.data.message)
+            setMessage(res.data.message) 
             window.location = '/login'
         })
     }
 
-    const handleClick = async (e)=> {
+    const handleClick = (e)=> {
         e.preventDefault()
 
         
         Axios.post('http://localhost:3001/login/password', {
             username: mail,
             password: password
-        }).then((res)=> {
+        })
+        .then((res)=> {
             setMessage(res.data.message)
         })
-        
-
-        
-
-        // try {
-        //     const res = await Axios.get('http://localhost:3001/login-success')
-        //     setMessage(res.data.message)
-        //     navigate('/login')        
-        // }
-        // catch(err) {
-        //     console.log(err)
-        // }
-
-        // try {
-        //     const res = await Axios.get('http://localhost:3001/login-failure')
-        //     setMessage(res.data.message)
-        
-        // }
-        // catch(err) {
-        //     console.log(err)
-        // }
-
-        /* Authentication in the front */
-        // try {
-        //     const res = await Axios.get('http://localhost:3001/login/password')
-        //     setData(res.data)
-
-        //     let email_list = []
-        //     let pass_list = []
-        //     for(var i = 0; i < data.length; i++) {
-        //         email_list.push(data[i].email)
-        //         pass_list.push(data[i].password)
-        //     }
-
-        //     if (email_list.includes(mail) && pass_list.includes(password)) {
-        //         setMessage("Successfully logged in")
-        //         setTimeout(() => {
-        //             navigate('/')
-        //         }, 2000);
-        //     }
-        //     else {
-        //         setMessage('Incorrect Email or Password')
-        //         setTimeout(() => {
-        //             navigate(0)
-        //         }, 2000);
-        //     }
-        // }
-        // catch(err) {
-        //     console.log(err)
-        // }
+    }
+    
+    if (message === 'invalid') {
+        window.location = '/login'
+        setMessage('')
+        // await setTimeout(()=> {
+        // }, 2000)
+    }
+    else if (message === 'success') {
+        window.location = '/'
+        setMessage('')
+        // await setTimeout(()=> {
+        // }, 2000)
     }
 
     return (
