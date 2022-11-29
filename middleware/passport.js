@@ -1,53 +1,50 @@
 var passport = require('passport');
 const con = require("../config/database");
 var LocalStrategy = require('passport-local').Strategy
-var crypto = require('crypto')
+const bcrypt = require('bcrypt')
+
 
 const customFields = {
     usernameField: 'username',
     passwordField: 'password',
 };
 
-const verifyCallback = (username, password, done)=> {
-    con.query('SELECT * FROM users WHERE username = ?', [ username ], function(err, results, row) {
-        if (err) 
-            return done(err);
-
-        if (results.length == 0) 
-            return done(null, false, { message: 'Incorrect email or password' });
-
-        const isValid = validPassword(password, results[0].hash, results[0].salt);
-        user = {id:results[0].id, username:results[0].username, hash:results[0].hash, salt:results[0].salt}
-    
-        // crypto.pbkdf2(password, row.salt, 31000, 32, 'sha256', function(err, hashedPassword){
-        //   if (err) return done(err);
-        //   if(!crypto.timingSafeEqual(row.hashed_password, hashedPassword)) {
-        //     return done(null, false, { message: 'Incorrect username or password.'});
-        //   }
-        //   return done(null, row);
-        // })
-        if(isValid) {
-            return  done(null, user);
-        }
-        else {
-            return done(null, false);
-        }
+const fetch = (username)=> {
+    return new Promise((resolve, reject) => {
+        con.query('SELECT * FROM users WHERE username = ?', [ username ], function(err, results, fields) {
+            if (err) {
+                reject(err);
+            }
+            else {
+                resolve(results)
+            }
+        })
     })
 }
 
+const verifyCallback = async (username, password, done)=> {
+    const results = await fetch(username)
+    
+    if(results[0] != undefined) {
+        bcrypt.compare(password, results[0].hash, (err, result) => {
+    
+            if (err) return done(err)
+            if (result) {
+                return done(null, true)
+            }
+            else {
+                return done(null, false);
+            }
+
+        })
+    }
+    else {
+        return done(null, false);
+    }
+}
+  
 const strategy = new LocalStrategy(customFields, verifyCallback);
 passport.use(strategy)
-
-const genPassword = (password, salt) => {
-    var salt = crypto.randomBytes(32).toString('hex');
-    var genhash = crypto.pbkdf2Sync(password, salt, 10000, 60, 'sha512').toString('hex')
-    return {salt:salt, hash:genhash}
-}
-
-const validPassword = (password, hash, salt) => {
-    var hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 60, 'sha512').toString('hex');
-    return hash = hashVerify
-}
 
 passport.serializeUser(function (user, cb) {
     process.nextTick(function() {
@@ -93,10 +90,14 @@ const userExists = (req, res, next)=> {
     })
 }
 
+const auth = passport.authenticate('local', {
+    successRedirect: '/login-success',
+    failureRedirect: '/login-failure'
+})
+
 module.exports = {
-    validPassword,
-    genPassword,
     isAuth,
     isAdmin,
-    userExists
+    userExists,
+    auth
 }
