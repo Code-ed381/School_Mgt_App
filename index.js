@@ -16,6 +16,7 @@ app.use(set_session)
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true})) 
 app.use(express.static('./public'))
 app.set('view engine', 'ejs')
 
@@ -26,7 +27,7 @@ con.connect(function(err) {
     console.log("Connected!")
   }
   else {
-    throw err;
+    throw err; 
   }
 });
 

@@ -9,14 +9,14 @@
 <body>
     <center>
         <section id="login">
-            <form action="/login" method="post">
+            <form action="/login/password" method="post">
                 <h1>Login</h1>
                 <label for="username">Username</label>
                 <input type="text" name="username" required placeholder="Enter your username"><br><br>
                 <label for="password">Password</label>
                 <input type="text" name="password" required placeholder="Enter your password">
                 <p>Not registered? <a href="/signup">register</a></p>
-                <button formaction="/login" type="submit">Login</button>
+                <button formaction="/login/password" type="submit">Login</button>
                 <p><a href="/logout">Log out</a></p>
             </form>
         </section>
