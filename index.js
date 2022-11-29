@@ -1,26 +1,25 @@
 const express = require("express");
 const con = require("./config/database");
-const passport_middleware = require("./middleware/passport");
+const cookieParser = require("cookie-parser");
 const set_session = require("./middleware/session");
 var passport = require('passport');
 const app = express();
 const cors = require("cors");
 const bodyParser = require('body-parser');
-const session = require("express-session");
 
 
 
+app.use(cookieParser())
 app.use(express.json())
 app.use(cors())
 app.use(set_session)
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded()) 
 app.use(express.static('./public'))
 app.set('view engine', 'ejs')
 
-
+ 
   
 con.connect(function(err) {
   if (!err) { 
@@ -34,7 +33,7 @@ con.connect(function(err) {
 
 
 
-app.use('/', require('./routes/login'))
+app.use('/', require('./routes/auth'))
 
 const PORT = process.env.PORT || 3001;
 
