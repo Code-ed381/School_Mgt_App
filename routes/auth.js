@@ -58,7 +58,7 @@ app.get('/admin-route', isAuth, (req, res, next)=> {
 })
 
 app.get('/notAuthorized', isAuth, (req, res, next)=> {
-    res.send('You are not authorized to view this page')
+    res.json({ message: 'You are not authorized to view this page'})
 })
 
 app.get('/notAuthorizedAdmin', isAuth, (req, res, next)=> {

@@ -18,8 +18,6 @@ const registerView =  (req, res, next)=>{
             })
         })
     })
-    
-
 }
 
 module.exports = {
