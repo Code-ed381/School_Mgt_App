@@ -58,22 +58,6 @@ function SignUp() {
             console.log(err)
         }
     }
-        
-    // const signup = () => {
-    //     Axios.post('http://localhost:3001/signup', { 
-    //         firstname: firstname,
-    //         middlename: middlename,
-    //         lastname: lastname,
-    //         mail: mail, 
-    //         password: password,
-    //     }).then((response) => {
-    //         if (response.data.message) {
-    //             setMessage(response.data.message)
-    //             window.location = '/login'
-    //             console.log(message)
-    //         }
-    //     })
-    // }
 
     return (
         <>
