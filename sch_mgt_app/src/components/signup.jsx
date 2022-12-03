@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 function SignUp() {
     const [firstname, setFirstName] = useState("");
     const [middlename, setMiddleName] = useState("");
-    const [lastname, setLastName] = useState("");
+    const [admin, setAdmin] = useState(0);
     const [mail, setMail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState('')
@@ -38,7 +38,7 @@ function SignUp() {
             await Axios.post('http://localhost:3001/signup/new', {
                 // firstname: firstname,
                 // middlename: middlename,
-                // lastname: lastname,
+                admin: admin,
                 username: mail, 
                 password: password,
             })
@@ -86,7 +86,7 @@ function SignUp() {
                         name="lastname" 
                         placeholder="Enter your last name"
                         onChange={(e) => { 
-                            setLastName(e.target.value)
+                            // setLastName(e.target.value)
                         }}
                     /><br />
                     <input 
@@ -105,6 +105,13 @@ function SignUp() {
                             setPassword(e.target.value)
                         }}
                     /><br />
+                    <input 
+                        type="checkbox" 
+                        name="checkbox" 
+                        onChange={(e) => { 
+                            setAdmin(1)
+                        }}
+                    /> <span>Admin?</span><br />
                     <input type="submit" id="submit" onClick={handleClick} value="Sign Up"/>
                     <input type="submit" id="logout" onClick={logout} value="Log out"/>
                     <p><a href="/login">Log In</a></p>

@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import App from '../App'
 import Axios from "axios";
 
-export const UserContext = createContext()
+const UserContext = createContext()
 
-function Login() {
+function Login({ children }) {
     const [user, setUser] = useState(null);
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
@@ -58,6 +58,7 @@ function Login() {
     return (
         <UserContext.Provider value={user}>
             <>
+            { children }
             <div className="App">
                 <header className="App-header">
                     <h2>Login</h2>
@@ -91,4 +92,4 @@ function Login() {
 }
 
 
-export default Login
+export { UserContext, Login}

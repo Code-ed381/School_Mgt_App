@@ -7,11 +7,11 @@ const app = express.Router();
 
 //CRUD for sch_mgt_app
 //Create
-app.post('/signup/newuser',userExists, registerView)
+app.post('/signup/new',userExists, registerView)
 
 //Read
 app.post('/login/password', auth, (req, res, next)=> {
-    console.log(res)
+    console.log(res.status)
 });
 
 app.get('/login', (req, res, next) => {
@@ -19,7 +19,7 @@ app.get('/login', (req, res, next) => {
 })
 
 app.get('/signup', (req, res, next) => {
-    res.render('register')
+    res.render('register') 
 })
 
 app.get('/', isAuth, (req, res, next) => {
