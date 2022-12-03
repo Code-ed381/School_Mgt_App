@@ -1,13 +1,12 @@
 import React from "react";
 import { useState, createContext, useContext } from "react";
 import SignUp from './components/signup';
-import Login from "./components/login";
+import {Login, UserContext} from "./components/login";
 import Home from "./components/home";
 import Dashboard from "./components/dashboard";
 import Admin from "./components/admin";
 import Landing from "./components/landing_page";
 import { BrowserRouter as Router,Routes, Route, Link } from "react-router-dom";
-import UserContext from "./components/login";
 import Axios from "axios";
 
 
