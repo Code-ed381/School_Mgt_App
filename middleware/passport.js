@@ -92,7 +92,7 @@ const userExists = (req, res, next)=> {
 }
 
 const auth = passport.authenticate('local', {
-    successRedirect: '/login-success',
+    // successRedirect: '/login-success',
     failureRedirect: '/login-failure'
 })
 
