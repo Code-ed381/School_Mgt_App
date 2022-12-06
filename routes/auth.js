@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerView} = require('../controllers/signup-controller');
+const { registerView, loginView } = require('../controllers/signup-controller');
 const { userExists, isAuth, auth } = require("../middleware/passport");
 const app = express.Router();
 
@@ -10,9 +10,7 @@ const app = express.Router();
 app.post('/signup/new',userExists, registerView)
 
 //Read
-app.post('/login/password', auth, (req, res, next)=> {
-    console.log(res.status)
-});
+app.post('/login/password', auth, loginView);
 
 app.get('/login', (req, res, next) => {
     res.render('login')
@@ -26,9 +24,7 @@ app.get('/', isAuth, (req, res, next) => {
     res.send({ message: 'authorized'})
 })
 
-app.get('/login-success', (req, res, next)=> {
-    res.json({message: 'success'})
-})
+app.get('/login-success', )
 
 app.get('/login-failure', (req, res, next)=> {
     res.json({message: 'invalid'})

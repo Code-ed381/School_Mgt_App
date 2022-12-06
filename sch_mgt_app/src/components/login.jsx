@@ -36,10 +36,9 @@ function Login({ children }) {
         .then((res)=> {
             try {
                 setUser({
-                    username: mail,
-                    password: password,
-                    persmissions: ['analyze'],
-                    roles: ['admin']
+                    id: res.data[0].id,
+                    username: res.data[0].username,
+                    roles: res.data[0].isAdmin
                 })
                 console.log(res)
                 
@@ -49,6 +48,7 @@ function Login({ children }) {
                 console.log(err)
             }
         })
+        
     }
     
     const viewUser = ()=> {
@@ -81,7 +81,7 @@ function Login({ children }) {
                     /><br />
                     {user ? (<input type="submit" id="logout" onClick={logout} value="Log out"/>): (<input type="submit" id="submit" onClick={handleClick} value="Log in"/>)}
                     
-                    <input type="submit" id="user" onClick={viewUser} value="View"/>
+                    <input type="submit" id="user" onClick={viewUser} value="View user"/>
                     <p><a href="/signup">Sign Up</a></p>
                     {/* <p><a href="/logout">Log out</a></p> */}
                 </header>
