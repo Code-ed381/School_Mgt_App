@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 // import $ from "jquery";
 
 function SignUp() {
-    const [firstname, setFirstName] = useState("");
-    const [middlename, setMiddleName] = useState("");
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [admin, setAdmin] = useState(0);
-    const [mail, setMail] = useState("");
     const [password, setPassword] = useState("");
+    const [re_password, setRe_password] = useState("");
     const [message, setMessage] = useState('')
 
     // const logout = () => {
@@ -25,27 +25,30 @@ function SignUp() {
       
     const handleClick = async (e)=> {
         e.preventDefault()
-        try {
-            const res = await Axios.get('http://localhost:3001/userAlreadyExists')
-            setMessage(res.data.message)
-        
-        }
-        catch(err) {
-            console.log(err)
-        }
-
-        try {
-            await Axios.post('http://localhost:3001/signup/new', {
-                // firstname: firstname,
-                // middlename: middlename,
-                admin: admin,
-                username: mail, 
-                password: password,
-            })
-            navigate('/login')
-        }
-        catch(err) {
-            console.log(err)
+        if (re_password === password) {
+            try {
+                await Axios.post('http://localhost:3001/signup/new', {
+                    username: username,
+                    email: email,
+                    admin: admin,
+                    password: password,
+                })
+                navigate('/login')
+                try {
+                    const res = await Axios.get('http://localhost:3001/userAlreadyExists')
+                    setMessage(res.data.message)
+                
+                }
+                catch(err) {
+                    console.log(err)
+                }
+            }
+            catch(err) {
+                console.log(err)
+            }
+        } 
+        else {
+            setMessage("Passwords do not match")
         }
     }
     
@@ -67,35 +70,21 @@ function SignUp() {
                 <h5>{message}</h5>
                     <input 
                         type="text" 
-                        name="firstname" 
-                        placeholder="Enter your first name" 
+                        name="username" 
+                        placeholder="Enter your username"
                         onChange={(e) => { 
-                            setFirstName(e.target.value)
+                            setUsername(e.target.value)
                         }}
-                    /><br/>
-                    <input 
-                        type="text" 
-                        name="middlename" 
-                        placeholder="Enter your middle name"
-                        onChange={(e) => { 
-                            setMiddleName(e.target.value)
-                        }}
-                    /><br/>
-                    <input 
-                        type="text" 
-                        name="lastname" 
-                        placeholder="Enter your last name"
-                        onChange={(e) => { 
-                            // setLastName(e.target.value)
-                        }}
+                        required
                     /><br />
                     <input 
                         type="mail" 
-                        name="mail" 
+                        name="email" 
                         placeholder="Enter your email" 
                         onChange={(e) => { 
-                            setMail(e.target.value)
+                            setEmail(e.target.value)
                         }}
+                        required
                     /><br />
                     <input 
                         type="password" 
@@ -104,13 +93,24 @@ function SignUp() {
                         onChange={(e) => { 
                             setPassword(e.target.value)
                         }}
+                        required
                     /><br />
+                    <input 
+                        type="password" 
+                        name="password" 
+                        placeholder="Re-type your password" 
+                        onChange={(e) => { 
+                            setRe_password(e.target.value)
+                        }}
+                        required
+                    /><br />                   
                     <input 
                         type="checkbox" 
                         name="checkbox" 
                         onChange={(e) => { 
                             setAdmin(1)
                         }}
+                        required
                     /> <span>Admin?</span><br />
                     <input type="submit" id="submit" onClick={handleClick} value="Sign Up"/>
                     <input type="submit" id="logout" onClick={logout} value="Log out"/>

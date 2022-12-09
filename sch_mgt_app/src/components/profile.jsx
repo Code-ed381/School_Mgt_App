@@ -1,15 +1,13 @@
-
-const Admin = ()=> {
+const Profile = ()=> {
     return (
       <>
       <div>
         <header>
-          <h2>Welcome</h2>
-          <h1>Admin</h1>
+          <h2>User Profile</h2>
         </header>
       </div>
       </>
     );
 }
   
-export default Admin;
+export default Profile;

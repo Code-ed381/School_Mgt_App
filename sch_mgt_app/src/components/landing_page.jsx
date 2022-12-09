@@ -1,5 +1,6 @@
 // import { useState, useEffect } from "react";
 // import Axios from "axios";
+import { Link } from "react-router-dom";
 
 const Landing = ()=> {
     // const [ message, setMessage ] = useState('')
@@ -28,12 +29,8 @@ const Landing = ()=> {
 
   return (
     <>
-    <div>
-      <header>
-        <h2>Welcome</h2>
-        <p>Landing Page</p>
-      </header>
-    </div>
+      <Link to="/login"><h4>Login</h4></Link>
+      <Link to="/signup"><h4>Sign Up</h4></Link>
     </>
   );
 }

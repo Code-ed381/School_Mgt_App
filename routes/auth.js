@@ -4,7 +4,7 @@ const { userExists, isAuth, auth } = require("../middleware/passport");
 const app = express.Router();
 
 
-
+ 
 //CRUD for sch_mgt_app
 //Create
 app.post('/signup/new',userExists, registerView)

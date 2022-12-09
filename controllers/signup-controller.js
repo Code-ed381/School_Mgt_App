@@ -1,7 +1,7 @@
 const con = require("../config/database");
 const bcrypt = require('bcrypt')
 
-
+ 
 //CRUD for sch_mgt_app
 //Create
 
@@ -21,7 +21,7 @@ const registerView =  (req, res, next)=>{
 }
 
 const loginView = (req, res, next) => {
-    con.query(`SELECT id,username,isAdmin FROM users WHERE username = ?`, [req.body.username], (err, results, fields) => {
+    con.query(`SELECT id,email,isAdmin FROM users WHERE email = ?`, [req.body.username], (err, results, fields) => {
         if (err) throw err
         res.send(results)
         console.log(results)

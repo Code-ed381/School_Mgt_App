@@ -4,8 +4,7 @@ const Dashboard = ()=> {
     <>
     <div>
       <header>
-        <h2>Welcome</h2>
-        <p>Landing Page</p>
+        <h2>Dashboard</h2>
       </header>
     </div>
     </>
