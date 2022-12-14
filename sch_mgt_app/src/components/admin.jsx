@@ -5,7 +5,7 @@ const Admin = ()=> {
       <div>
         <header>
           <h2>Welcome</h2>
-          <p>Landing Page</p>
+          <h1>Admin</h1>
         </header>
       </div>
       </>

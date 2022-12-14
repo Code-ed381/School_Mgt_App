@@ -1,17 +1,18 @@
 import React from "react";
 import { useState, createContext, useContext } from "react";
 import SignUp from './components/signup';
-import {Login, UserContext} from "./components/login";
+import Login from "./components/login";
+import ProtectedRoute from "./components/context";
 import Home from "./components/home";
 import Dashboard from "./components/dashboard";
 import Admin from "./components/admin";
 import Landing from "./components/landing_page";
+import Profile from "./components/profile";
 import { BrowserRouter as Router,Routes, Route, Link } from "react-router-dom";
 import Axios from "axios";
 
 
 const App = ()=> { 
-  const user = useContext(UserContext)
   // const [isAuth, setisAuth] = useState(false)
 
 //   useEffect(()=> {
@@ -57,19 +58,11 @@ const App = ()=> {
       <Route path="/admin" element={<Admin />}/>
       <Route path='/login' element={<Login />} />
       <Route path='/signup' element={<SignUp />}/>
+      <Route path='/profile' element={<Profile />}/>
       </Routes>
     </Router>
     </>
   )
-}
-
-const Navigation = ()=> {
-  <nav>
-    <Link to='/landing'>Landing Page</Link>
-    <Link to='/home'>Home</Link>
-    <Link to='/dashboard'>Dashboard</Link>
-    <Link to='/admin'>Admin</Link>
-  </nav>
 }
 
 export default App;

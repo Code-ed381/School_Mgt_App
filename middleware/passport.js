@@ -11,7 +11,7 @@ const customFields = {
 
 const fetch = (username)=> {
     return new Promise((resolve, reject) => {
-        con.query('SELECT * FROM users WHERE username = ?', [ username ], function(err, results, fields) {
+        con.query('SELECT * FROM users WHERE email = ?', [ username ], function(err, results, fields) {
             if (err) {
                 reject(err);
             }
@@ -48,7 +48,7 @@ passport.use(strategy)
 
 passport.serializeUser(function (user, cb) {
     process.nextTick(function() {
-        cb(null, { id:user.id, username: user.username})
+        return cb(null, { id:user.id, username: user.username})
     })
 })
 
@@ -76,7 +76,7 @@ const isAdmin = (req, res, next)=> {
         res.redirect('/notAuthorizedAdmin')
     }
 }
-
+ 
 const userExists = (req, res, next)=> {
     con.query('SELECT * from users where username=?', [req.body.username], (error, results, fields)=> {
         if(error) {

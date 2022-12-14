@@ -4,7 +4,7 @@ const { userExists, isAuth, auth } = require("../middleware/passport");
 const app = express.Router();
 
 
-
+ 
 //CRUD for sch_mgt_app
 //Create
 app.post('/signup/new',userExists, registerView)
@@ -24,7 +24,9 @@ app.get('/', isAuth, (req, res, next) => {
     res.send({ message: 'authorized'})
 })
 
-app.get('/login-success', )
+app.get('/login-success', (req, res, next)=> {
+    console.log('Logged in')
+})
 
 app.get('/login-failure', (req, res, next)=> {
     res.json({message: 'invalid'})
