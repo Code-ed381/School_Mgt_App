@@ -24,7 +24,9 @@ app.get('/', isAuth, (req, res, next) => {
     res.send({ message: 'authorized'})
 })
 
-app.get('/login-success', )
+app.get('/login-success', (req, res, next)=> {
+    console.log('Logged in')
+})
 
 app.get('/login-failure', (req, res, next)=> {
     res.json({message: 'invalid'})

@@ -48,7 +48,7 @@ passport.use(strategy)
 
 passport.serializeUser(function (user, cb) {
     process.nextTick(function() {
-        cb(null, { id:user.id, username: user.username})
+        return cb(null, { id:user.id, username: user.username})
     })
 })
 

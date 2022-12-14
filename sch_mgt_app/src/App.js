@@ -1,7 +1,8 @@
 import React from "react";
 import { useState, createContext, useContext } from "react";
 import SignUp from './components/signup';
-import {Login, ProtectedRoute } from "./components/login";
+import Login from "./components/login";
+import ProtectedRoute from "./components/context";
 import Home from "./components/home";
 import Dashboard from "./components/dashboard";
 import Admin from "./components/admin";
@@ -54,7 +55,7 @@ const App = ()=> {
       <Route path="/landing" element={<Landing />}/>
       <Route path="/home" element={<Home />}/>
       <Route path="/dashboard" element={<Dashboard />}/>
-      <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>}/>
+      <Route path="/admin" element={<Admin />}/>
       <Route path='/login' element={<Login />} />
       <Route path='/signup' element={<SignUp />}/>
       <Route path='/profile' element={<Profile />}/>

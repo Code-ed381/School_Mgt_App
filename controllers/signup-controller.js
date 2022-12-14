@@ -6,12 +6,12 @@ const bcrypt = require('bcrypt')
 //Create
 
 const registerView =  (req, res, next)=>{
-    const {email, username, password, admin } = req.body
+    const {email, username, password, role } = req.body
 
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(password, salt, (err, hash) => {
 
-            con.query(`INSERT INTO users (email, username, hash, salt, isAdmin) VALUES (?, ?, ?, ?, ?)`,[ email, username, hash, salt, admin], (error, result) => {
+            con.query(`INSERT INTO users (email, username, hash, salt, role) VALUES (?, ?, ?, ?, ?)`,[ email, username, hash, salt, role], (error, result) => {
                 if (error) throw error; 
                 res.send('Inserted')
                 console.log(result) 
@@ -21,7 +21,7 @@ const registerView =  (req, res, next)=>{
 }
 
 const loginView = (req, res, next) => {
-    con.query(`SELECT id,email,isAdmin FROM users WHERE email = ?`, [req.body.username], (err, results, fields) => {
+    con.query(`SELECT id,email,role FROM users WHERE email = ?`, [req.body.username], (err, results, fields) => {
         if (err) throw err
         res.send(results)
         console.log(results)
