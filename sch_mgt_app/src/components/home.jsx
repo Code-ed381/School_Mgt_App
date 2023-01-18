@@ -192,7 +192,7 @@ function Home() {
                         </a>
 
                         <div className="user-menu dropdown-menu">
-                            <a className="nav-link" href="#"><i className="fa fa- user"></i>My Profile</a>
+                            <a className="nav-link" href="/profile"><i className="fa fa- user"></i>My Profile</a>
 
                             <a className="nav-link" href="#"><i className="fa fa- user"></i>Notifications <span className="count">13</span></a>
 
