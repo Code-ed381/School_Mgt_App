@@ -4,7 +4,7 @@ var LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt')
 
 
-const customFields = {
+const customFields = { 
     usernameField: 'username',
     passwordField: 'password',
 };

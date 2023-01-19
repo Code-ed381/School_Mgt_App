@@ -1,8 +1,8 @@
-import { useState  } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import Axios from "axios";
+import { Children } from "react";
 
-function Home() {
+function Home(props) {
   // if (!user) {
   //   console.log(user)
   //   return <Navigate to='/landing' replace/>
@@ -25,7 +25,7 @@ function Home() {
             <div id="main-menu" className="main-menu collapse navbar-collapse">
                 <ul className="nav navbar-nav">
                     <li className="active">
-                        <a href="index.html"><i className="menu-icon fa fa-laptop"></i>Dashboard </a>
+                        <Link to="dashboard"><i className="menu-icon fa fa-laptop"></i>Dashboard </Link>
                     </li>
                     <li className="menu-title">UI elements</li>
                     <li className="menu-item-has-children dropdown">
@@ -102,7 +102,7 @@ function Home() {
 
 
       <div id="right-panel" className="right-panel">
-      <header id="header" className="header">
+        <header id="header" className="header">
             <div className="top-left">
                 <div className="navbar-header">
                     <a className="navbar-brand" href="./"><img src="images/logo.png" alt="Logo"/></a>
@@ -192,20 +192,53 @@ function Home() {
                         </a>
 
                         <div className="user-menu dropdown-menu">
-                            <a className="nav-link" href="/profile"><i className="fa fa- user"></i>My Profile</a>
+                            <Link className="nav-link" to="profile"><i className="fa fa- user"></i>My Profile</Link>
 
                             <a className="nav-link" href="#"><i className="fa fa- user"></i>Notifications <span className="count">13</span></a>
 
                             <a className="nav-link" href="#"><i className="fa fa -cog"></i>Settings</a>
 
-                            <a className="nav-link" href="/logout" onClick={logout}><i className="fa fa-power -off"></i>Logout</a>
+                            <Link className="nav-link" to="/logout"><i className="fa fa-power -off"></i>Logout</Link>
                         </div>
                     </div>
 
                 </div>
             </div>
         </header>
+
+        {/* <div class="breadcrumbs" style={{backgroundColor: '#ffe135'}}>
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Dashboard</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="#">Dashboard</a></li>
+                                    <li><a href="#">Table</a></li>
+                                    <li class="active">Basic table</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> */}
+
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <Outlet/>
+            </div>
+        </div>
       </div>
+
     </>
   );
 }
