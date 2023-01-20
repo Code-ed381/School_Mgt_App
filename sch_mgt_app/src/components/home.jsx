@@ -12,7 +12,8 @@ function Home(props) {
 
     Axios.get('http://localhost:3001/logout')
     .then((res)=>{
-        // setMessage(res.data.message) 
+        // setMessage(res.data.message)
+        window.localStorage.setItem('user', 'logged_out') 
         window.location = '/login'
         // setUser(null) 
     })
@@ -304,7 +305,7 @@ function Home(props) {
                                     {/* <!-- text--> */}
                                     <div className="dropdown-divider"></div>
                                     {/* <!-- text--> */}
-                                    <a href="pages-login.html" className="dropdown-item"><i className="fa fa-power-off"></i> Logout</a>
+                                    <a href="#" onClick={logout} className="dropdown-item"><i className="fa fa-power-off"></i> Logout</a>
                                     {/* <!-- text--> */}
                                 </div>
                             </li>

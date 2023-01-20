@@ -58,18 +58,18 @@ passport.deserializeUser(function(user, cb) {
     })
 })
  
-const isAuth = (req, res, next)=> {
-    if(req.isAuthenticated()) {
+const auth = (req, res, next)=> {
+    if(req.isAuthenticated) {
         next()
     }
     else{
         res.json({ message: 'not authorized'})
-        // res.redirect('/notAuthorized')
+        res.redirect('/notAuthorized')
     }
 }
 
 const isAdmin = (req, res, next)=> {
-    if(req.isAuthenticated() && req.user.isAdmin) {
+    if(req.isAuthenticated && req.user.isAdmin) {
         next()
     }
     else{
@@ -78,21 +78,27 @@ const isAdmin = (req, res, next)=> {
 }
  
 const userExists = (req, res, next)=> {
-    con.query('SELECT * from users where username=?', [req.body.username], (error, results, fields)=> {
-        if(error) {
-            console.log("Error")
-        }
-        else if(results.length>0) {
-            res.redirect('/userAlreadyExists')
-        }
-        else { 
-            next() 
-        }
-    })
+    if (req.isAuthenticated) {
+        con.query('SELECT * from users where username=?', [req.body.username], (error, results, fields)=> {
+            if(error) {
+                console.log("Error")
+            }
+            else if(results.length>0) {
+                res.redirect('/userAlreadyExists')
+            }
+            else { 
+                next() 
+            }
+        })
+    }
+    else {
+        res.json({ message: 'not authorized'})
+        res.redirect('/notAuthorized')
+    }
 }
 
-const auth = passport.authenticate('local', {
-    // successRedirect: '/login-success',
+const isAuth = passport.authenticate('local', {
+    successRedirect: '/login-success',
     failureRedirect: '/login-failure'
 })
 
