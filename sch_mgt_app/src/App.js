@@ -17,7 +17,7 @@ import {
   Router,
   Routes,
   Route,
-  Navigate
+  Navigate,
 } from "react-router-dom";
 
 // const App = ()=> {
@@ -54,19 +54,29 @@ import {
 //   )
 // )
 
+const auth = ()=> {
+  const user = window.localStorage.getItem('user')
+
+  if(user != 'logged_in') {
+    window.location = '/login'
+  }
+}
+
 
 const App = createBrowserRouter([
   {
-    path: "/",
+    path: "",
     element: <Home/>,
     children:[
       {
-        path: '',
-        element: <Dashboard/>
+        path: '/',
+        element: <Dashboard/>,
+        loader: ()=> {auth()}
       },
       {
         path: 'profile',
-        element: <Profile/>
+        element: <Profile/>,
+        loader: ()=> {auth()}
       }
     ]
   },

@@ -33,12 +33,7 @@ const Login = ()=> {
         .then((res)=> {
             console.log(res)
             try {
-                setUser({
-                    id: res.data[0].id,
-                    username: res.data[0].email,
-                    roles: res.data[0].role
-                })
-                window.localStorage.setItem('user', res.data[0].role)
+                window.localStorage.setItem('user', res.data.message)
                 window.location = '/'
             }
             catch (err) {
