@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 // import $ from "jquery";
 
 function SignUp() {
@@ -33,7 +33,7 @@ function SignUp() {
                     role: role,
                     password: password,
                 })
-                navigate('/login')
+                navigate('/')
                 try {
                     const res = await Axios.get('http://localhost:3001/userAlreadyExists')
                     setMessage(res.data.message)
@@ -64,48 +64,60 @@ function SignUp() {
 
     return (
         <>
-                <div class="sufee-login d-flex align-content-center flex-wrap">
-        <div class="container">
-            <div class="login-content">
-                <div class="login-logo">
-                    <a href="index.html">
-                        <img class="align-content" src="images/logo.png" alt="" />
-                    </a>
+            {/* <!-- Main wrapper - style you can find in pages.scss -->
+            <!-- ============================================================== --> */}
+            <section id="wrapper">
+                <div class="login-register" style={{ backgroundImage: 'url(../assets/images/background/login-register.jpg)'}}>
+                    <div class="login-box card">
+                        <div class="card-body">
+                            <form class="form-horizontal form-material" id="loginform" action="index.html">
+                                <h3 class="text-center m-b-20">Sign Up</h3>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <input class="form-control" type="text" required="" placeholder="Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-xs-12">
+                                        <input class="form-control" type="text" required="" placeholder="Email"/>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-xs-12">
+                                        <input class="form-control" type="password" required="" placeholder="Password"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <input class="form-control" type="password" required="" placeholder="Confirm Password"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="customCheck1"/>
+                                            <label class="form-check-label" for="customCheck1">I agree to all <a href="javascript:void(0)">Terms</a></label> 
+                                        </div> 
+                                    </div>
+                                </div>
+                                <div class="form-group text-center p-b-20">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-info btn-lg w-100 btn-rounded text-uppercase waves-effect waves-light text-white" type="submit">Sign Up</button>
+                                    </div>
+                                </div>
+                                <div class="form-group m-b-0">
+                                    <div class="col-sm-12 text-center">
+                                        Already have an account? <Link to="/login" class="text-info m-l-5"><b>Sign In</b></Link>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="login-form">
-                    <form>
-                        <div class="form-group">
-                            <label>User Name</label>
-                            <input type="email" class="form-control" placeholder="User Name" />
-                        </div>
-                        <div class="form-group">
-                            <label>Email address</label>
-                            <input type="email" class="form-control" placeholder="Email"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" class="form-control" placeholder="Password"/>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"/> Agree the terms and policy
-                            </label>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Register</button>
-                        <div class="social-login-content">
-                            <div class="social-button">
-                                <button type="button" class="btn social facebook btn-flat btn-addon mb-3"><i class="ti-facebook"></i>Register with facebook</button>
-                                <button type="button" class="btn social twitter btn-flat btn-addon mt-2"><i class="ti-twitter"></i>Register with twitter</button>
-                            </div>
-                        </div>
-                        <div class="register-link m-t-15 text-center">
-                            <p>Already have account ? <a href="/login"> Sign in</a></p>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+            </section>
+            {/* <!-- ============================================================== -->
+            <!-- End Wrapper -->
+            <!-- ============================================================== --> */}
         </>
     );
 }

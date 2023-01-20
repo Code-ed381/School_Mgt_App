@@ -2,7 +2,7 @@ import { useState } from "react";
 import Axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
-const Login = ()=> {
+const Recover = ()=> {
     const [user, setUser] = useState(null);
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
@@ -39,7 +39,7 @@ const Login = ()=> {
                     roles: res.data[0].role
                 })
                 window.localStorage.setItem('user', res.data[0].role)
-                window.location = '/'
+                window.location = '/home'
             }
             catch (err) {
                 console.log(err)
@@ -61,55 +61,32 @@ const Login = ()=> {
                 <div class="login-register" style={{backgroundImage: 'url(../assets/images/background/login-register.jpg)' }}>
                     <div class="login-box card">
                         <div class="card-body">
-                            <form class="form-horizontal form-material" id="loginform" action="index.html">
+                            {/* <form class="form-horizontal form-material" id="loginform" action="index.html">
                                 <h3 class="text-center m-b-20">Sign In</h3>
                                 <div class="form-group ">
                                     <div class="col-xs-12">
-                                        <input 
-                                            class="form-control" 
-                                            name = "username"
-                                            type="text" 
-                                            required 
-                                            placeholder="Username"
-                                            onChange={(e) => { 
-                                                setMail(e.target.value)
-                                            }}
-                                        /> 
-                                    </div>
+                                        <input class="form-control" type="text" required="" placeholder="Username"/> </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-xs-12">
-                                        <input 
-                                            class="form-control" 
-                                            type="password" 
-                                            required 
-                                            placeholder="Password"
-                                            onChange={(e) => { 
-                                                setPassword(e.target.value)
-                                            }}
-                                        /> 
-                                    </div>
+                                        <input class="form-control" type="password" required="" placeholder="Password"/> </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
                                         <div class="d-flex no-block align-items-center">
                                             <div class="form-check">
-                                                <input 
-                                                    type="checkbox" 
-                                                    class="form-check-input" 
-                                                    id="customCheck1"
-                                                />
+                                                <input type="checkbox" class="form-check-input" id="customCheck1"/>
                                                 <label class="form-check-label" for="customCheck1">Remember me</label>
                                             </div> 
                                             <div class="ms-auto">
-                                                <Link to="/recover-password" id="to-recover" class="text-muted"><i class="fas fa-lock m-r-5"></i> Forgot password?</Link> 
+                                                <a href="javascript:void(0)" id="to-recover" class="text-muted"><i class="fas fa-lock m-r-5"></i> Forgot password?</a> 
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group text-center">
                                     <div class="col-xs-12 p-b-20">
-                                        <button class="btn w-100 btn-lg btn-info btn-rounded text-white" type="submit" onClick={handleClick}>Log In</button>
+                                        <button class="btn w-100 btn-lg btn-info btn-rounded text-white" type="submit">Log In</button>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -122,7 +99,24 @@ const Login = ()=> {
                                 </div>
                                 <div class="form-group m-b-0">
                                     <div class="col-sm-12 text-center">
-                                        Don't have an account? <Link to="/signup" class="text-info m-l-5"><b>Sign Up</b></Link>
+                                        Don't have an account? <a href="pages-register.html" class="text-info m-l-5"><b>Sign Up</b></a>
+                                    </div>
+                                </div>
+                            </form> */}
+                            <form class="form-horizontal" id="" action="index.html">
+                                <div class="form-group ">
+                                    <div class="col-xs-12">
+                                        <h3>Recover Password</h3>
+                                        <p class="text-muted">Enter your Email and instructions will be sent to you! </p>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-xs-12">
+                                        <input class="form-control" type="text" required="" placeholder="Email"/> </div>
+                                </div>
+                                <div class="form-group text-center m-t-20">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-primary btn-lg w-100 text-uppercase waves-effect waves-light" type="submit">Reset</button>
                                     </div>
                                 </div>
                             </form>
@@ -139,7 +133,7 @@ const Login = ()=> {
 }
 
 
-export default Login
+export default Recover
 
 
 
