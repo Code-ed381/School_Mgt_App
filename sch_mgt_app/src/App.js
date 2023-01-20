@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, createContext, useContext } from "react";
 import SignUp from './components/signup';
+import Recover from './components/forgot_pwd';
 import Login from "./components/login";
 import Students from "./components/students";
 import Profile from "./components/profile";
@@ -13,20 +14,74 @@ import Axios from "axios";
 import {
   createBrowserRouter,
   createRoutesFromElements,
+  Router,
+  Routes,
   Route,
   Navigate
 } from "react-router-dom";
 
+// const App = ()=> {
+//   const [loggedIn, setLoggedIn ] = useState(true)
+//   const toggleRoute = ()=> {
+//     setLoggedIn(false);
+//   }
 
-const App = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<Home/>}>
-      <Route path="students" element={<Students/>} />
-      <Route path="profile" element={<Profile/>} />
-      <Route path="dashboard" element={<Dashboard/>} />
-    </Route>
-  )
-)
+//   return (
+//     <>
+//       <Router>
+//         <Routes>
+//           <Route path="/" element={<Home/>}>
+//             <Route path="" element={<Dashboard/>}/>
+//             <Route path="students" element={<Students/>} />
+//             <Route path="profile" element={<Profile/>} />
+//             <Route path="dashboard" element={<Dashboard/>} />
+//           </Route>
+//         </Routes>
+//       </Router>
+//     </>
+//   )
+// }
 
+
+// const App = createBrowserRouter(
+//   createRoutesFromElements(
+//     <Route element={<Home/>}>
+//       <Route path="" element={<Dashboard/>}/>
+//       <Route path="students" element={<Students/>} />
+//       <Route path="profile" element={<Profile/>} />
+//       <Route path="dashboard" element={<Dashboard/>} />
+//     </Route>
+//   )
+// )
+
+
+const App = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home/>,
+    children:[
+      {
+        path: '',
+        element: <Dashboard/>
+      },
+      {
+        path: 'profile',
+        element: <Profile/>
+      }
+    ]
+  },
+  {
+    path: 'login',
+    element: <Login/>
+  },
+  {
+    path: 'signup',
+    element: <SignUp/>
+  },
+  {
+    path: 'recover-password',
+    element: <Recover/>
+  }
+])
 
 export default App;
