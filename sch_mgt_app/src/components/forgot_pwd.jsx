@@ -116,7 +116,7 @@ const Recover = ()=> {
                                 </div>
                                 <div class="form-group text-center m-t-20">
                                     <div class="col-xs-12">
-                                        <button class="btn btn-primary btn-lg w-100 text-uppercase waves-effect waves-light" type="submit">Reset</button>
+                                        <button class="btn btn-primary btn-lg w-100 text-uppercase waves-effect waves-light" type="submit">Send Link</button>
                                     </div>
                                 </div>
                             </form>

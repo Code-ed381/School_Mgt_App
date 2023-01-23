@@ -3,7 +3,7 @@ import Axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
 const Login = ()=> {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState('');
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
@@ -35,17 +35,13 @@ const Login = ()=> {
             try {
                 window.localStorage.setItem('user', res.data.message)
                 window.location = '/'
+                setUser(res.data.message)
             }
             catch (err) {
                 console.log(err)
             }
         })       
     }
-    
-    const viewUser = ()=> {
-        alert(window.localStorage.getItem('user'))
-    }
-
 
     return (
         <>
@@ -59,6 +55,7 @@ const Login = ()=> {
                             <form class="form-horizontal form-material" id="loginform" action="index.html">
                                 <h3 class="text-center m-b-20">Sign In</h3>
                                 <div class="form-group ">
+                                    <h3>{user}</h3>
                                     <div class="col-xs-12">
                                         <input 
                                             class="form-control" 

@@ -1,23 +1,26 @@
 import { Outlet, Link } from "react-router-dom";
 import Axios from "axios";
-import { Children } from "react";
+import { useState, useEffect } from "react";
 
-function Home(props) {
-  // if (!user) {
-  //   console.log(user)
-  //   return <Navigate to='/landing' replace/>
-  // }
-  const logout = async (e)=>  {
-    e.preventDefault()
+function Home() {
+    const [username, setUsername] = useState('')
+    useEffect(() => {
+        Axios.get('http://localhost:3001/login')
+        .then((res)=>{
+            setUsername(res.data[0].username)
+            // console.log(res.data[0].username)
+        })
+    }, [])
 
-    Axios.get('http://localhost:3001/logout')
-    .then((res)=>{
-        // setMessage(res.data.message)
-        window.localStorage.setItem('user', 'logged_out') 
-        window.location = '/login'
-        // setUser(null) 
-    })
-}
+    const logout = async (e)=>  {
+        e.preventDefault()
+
+        Axios.get('http://localhost:3001/logout')
+        .then((res)=>{
+            window.localStorage.setItem('user', 'logged_out') 
+            window.location = '/login'
+        })
+    }
 
   return (
     <>
@@ -53,7 +56,7 @@ function Home(props) {
                                 <img src="./assets/images/logo-light-icon.png" alt="homepage" className="light-logo" />
                             </b>
                             {/* <!--End Logo icon --> */}
-                            <span className="hidden-xs"><span className="font-bold">elite</span>university</span>
+                            <span className="hidden-xs"><span className="font-bold">AJxT</span></span>
                         </a>
                     </div>
                     {/* <!-- ============================================================== -->
@@ -165,7 +168,7 @@ function Home(props) {
                                                 <a href="javascript:void(0)">
                                                     <div className="user-img"> <img src="../assets/images/users/4.jpg" alt="user" className="img-circle"/> <span className="profile-status offline pull-right"></span> </div>
                                                     <div className="mail-contnet">
-                                                        <h5>Pavan kumar</h5> <span className="mail-desc">Just see the my admin!</span> <span className="time">9:02 AM</span> </div>
+                                                        <h5>{username}</h5> <span className="mail-desc">Just see the my admin!</span> <span className="time">9:02 AM</span> </div>
                                                 </a>
                                             </div>
                                         </li>
@@ -329,7 +332,7 @@ function Home(props) {
                     {/* <!-- Sidebar navigation--> */}
                     <nav className="sidebar-nav">
                         <ul id="sidebarnav">
-                            <li className="user-pro"> <a className="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user-img" className="img-circle"/><span className="hide-menu">Prof. Mark</span></a>
+                            <li className="user-pro"> <a className="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user-img" className="img-circle"/><span className="hide-menu">{username}</span></a>
                                 <ul aria-expanded="false" className="collapse">
                                     <li><a href="javascript:void(0)"><i className="ti-user"></i> My Profile</a></li>
                                     <li><a href="javascript:void(0)"><i className="ti-wallet"></i> My Balance</a></li>

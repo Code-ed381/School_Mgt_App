@@ -33,7 +33,23 @@ function SignUp() {
                     role: role,
                     password: password,
                 })
-                navigate('/')
+                .then((res)=> {
+                    console.log(res)
+                    try {
+                        if(res.data.message === 'logged_in') {
+                            window.localStorage.setItem('user', res.data.message)
+                            navigate('/')
+                            setRole(res.data.message)
+                        }
+                        else {
+                            setMessage(res.data.message)
+                        }
+                    }
+                    catch (err) {
+                        console.log(err)
+                    }
+                })  
+                
                 try {
                     const res = await Axios.get('http://localhost:3001/userAlreadyExists')
                     setMessage(res.data.message)
@@ -71,38 +87,81 @@ function SignUp() {
                     <div class="login-box card">
                         <div class="card-body">
                             <form class="form-horizontal form-material" id="loginform" action="index.html">
+                                <p className="alert alert-danger">{message}</p>
                                 <h3 class="text-center m-b-20">Sign Up</h3>
                                 <div class="form-group">
                                     <div class="col-xs-12">
-                                        <input class="form-control" type="text" required="" placeholder="Name" />
+                                        <input 
+                                            class="form-control" 
+                                            type="text" 
+                                            required
+                                            placeholder="Name" 
+                                            onChange={(e) => { 
+                                                setUsername(e.target.value)
+                                            }}
+                                        />
                                     </div>
                                 </div>
                                 <div class="form-group ">
                                     <div class="col-xs-12">
-                                        <input class="form-control" type="text" required="" placeholder="Email"/>
+                                        <input 
+                                            class="form-control" 
+                                            type="text" 
+                                            required
+                                            placeholder="Email"
+                                            onChange={(e) => { 
+                                                setEmail(e.target.value)
+                                            }}
+                                        />
                                     </div>
                                 </div>
                                 <div class="form-group ">
                                     <div class="col-xs-12">
-                                        <input class="form-control" type="password" required="" placeholder="Password"/>
+                                        <input 
+                                            class="form-control" 
+                                            type="password" 
+                                            required 
+                                            placeholder="Password"
+                                            onChange={(e) => { 
+                                                setPassword(e.target.value)
+                                            }}
+                                        />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-xs-12">
-                                        <input class="form-control" type="password" required="" placeholder="Confirm Password"/>
+                                        <input 
+                                            class="form-control" 
+                                            type="password" 
+                                            required
+                                            placeholder="Confirm Password"
+                                            onChange={(e) => { 
+                                                setRe_password(e.target.value)
+                                            }}
+                                        />
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="customCheck1"/>
+                                            <input 
+                                                type="checkbox" 
+                                                class="form-check-input" 
+                                                id="customCheck1"
+                                            />
                                             <label class="form-check-label" for="customCheck1">I agree to all <a href="javascript:void(0)">Terms</a></label> 
                                         </div> 
                                     </div>
                                 </div>
                                 <div class="form-group text-center p-b-20">
                                     <div class="col-xs-12">
-                                        <button class="btn btn-info btn-lg w-100 btn-rounded text-uppercase waves-effect waves-light text-white" type="submit">Sign Up</button>
+                                        <button 
+                                            class="btn btn-info btn-lg w-100 btn-rounded text-uppercase waves-effect waves-light text-white" 
+                                            type="submit"
+                                            onClick={handleClick}
+                                        >
+                                            Sign Up
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="form-group m-b-0">
