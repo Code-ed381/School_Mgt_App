@@ -68,7 +68,7 @@ const App = createBrowserRouter([
     path: "",
     element: <Home/>,
     children:[
-      {
+      { 
         path: '/',
         element: <Dashboard/>,
         loader: ()=> {auth()}

@@ -35,7 +35,7 @@ app.get('/login-failure', (req, res, next)=> {
 
 app.get('/logout', (req, res, next)=> {
     req.logout(function(err) {
-        if (err) { console.log(error) }
+        if (err) { console.log(err) }
         res.json({message: 'Logged out'})
     });
 })
