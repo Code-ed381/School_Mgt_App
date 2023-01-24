@@ -8,7 +8,7 @@ function Home() {
         Axios.get('http://localhost:3001/login')
         .then((res)=>{
             setUsername(res.data[0].username)
-            // console.log(res.data[0].username)
+            // console.log(res.data[0].username) 
         })
     }, [])
 
