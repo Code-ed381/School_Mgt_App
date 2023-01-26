@@ -4,12 +4,13 @@ var LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt')
 
 
+
 const customFields = { 
     usernameField: 'username',
     passwordField: 'password',
 };
 
-const fetch = (username)=> {
+const user = (username)=> {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM users WHERE email = ?', [ username ], function(err, results, fields) {
             if (err) {
@@ -23,7 +24,7 @@ const fetch = (username)=> {
 }
 
 const verifyCallback = async (username, password, done)=> {
-    const results = await fetch(username)
+    const  results = await user(username)
     
     if(results[0] != undefined) {
         bcrypt.compare(password, results[0].hash, (err, result) => {
@@ -34,7 +35,7 @@ const verifyCallback = async (username, password, done)=> {
             }
             else {
                 return done(null, false);
-            }
+            } 
 
         })
     }
@@ -84,7 +85,7 @@ const userExists = (req, res, next)=> {
                 console.log("Error")
             }
             else if(results.length>0) {
-                res.redirect('/userAlreadyExists')
+                res.redirect('/userAlreadyExists')    
             }
             else { 
                 next() 
@@ -106,5 +107,6 @@ module.exports = {
     isAuth,
     isAdmin,
     userExists,
-    auth
+    auth,
+    user
 }

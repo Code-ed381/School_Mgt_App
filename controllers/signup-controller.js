@@ -20,8 +20,8 @@ const registerView =  (req, res, next)=>{
     })
 }
 
-const loginView = (req, res, next) => {
-    con.query(`SELECT username FROM users WHERE email = 'eddyz@admin.com'`, (err, results, fields) => {
+const  loginView = (req, res, next) => {
+    con.query(`SELECT username FROM users WHERE email = ?`, [username], (err, results, fields) => {
         if (err) throw err
         res.send(results)
         console.log(results)
@@ -32,7 +32,6 @@ const GetUsersView = (req, res, next) => {
     con.query(`SELECT user_id,username,email,age,phone_num,role,first_name,middle_name,last_name,nationality FROM users`, (err, results, fields) => {
         if (err) throw err
         res.send(results)
-        console.log(fields)
     }) 
 }
 

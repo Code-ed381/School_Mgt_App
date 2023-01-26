@@ -1,7 +1,8 @@
 const express = require('express');
 const { registerView, loginView, GetUsersView } = require('../controllers/signup-controller');
-const { userExists, isAuth, auth } = require("../middleware/passport");
+const { userExists, isAuth, auth, user } = require("../middleware/passport");
 const app = express.Router();
+const { createTokens } = require('../data/tokens')
 
 
  
@@ -10,7 +11,12 @@ const app = express.Router();
 app.post('/signup/new', userExists, registerView)
 
 //Read
-app.post('/login/password', isAuth, );
+app.post('/login/password', isAuth, (req, res, next) =>{
+    const accessToken = createTokens(user)
+    res.cookie('access-token', accessToken, {
+        maxAge: 60*60*24*30*1000,
+    })
+});
 
 
 app.get('/getusers',auth, GetUsersView);
