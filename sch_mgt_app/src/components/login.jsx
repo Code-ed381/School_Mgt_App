@@ -31,17 +31,19 @@ const Login = ()=> {
             password: password
         })
         .then((res)=> {
-            try {
-                if ( res.data.message === 'logged_in') {
-                    // window.location = 'home'
-                }
-                else {
-                    setMessage(res.data.message)
-                } 
-            }
-            catch (err) {
-                console.log(err)
-            }
+            window.location = 'home'
+            setMessage(res.data.message)
+
+            localStorage.setItem("user", JSON.stringify(res.data.message))
+            // try {
+            //     if ( res.data.message === 'logged_in') {
+            //     }
+            //     else {
+            //     } 
+            // }
+            // catch (err) {
+            //     console.log(err)
+            // }
         })       
     }
 
