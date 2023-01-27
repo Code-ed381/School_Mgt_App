@@ -1,23 +1,22 @@
 import { Outlet, Link } from "react-router-dom";
 import Axios from "axios";
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 
 function Home() {
-    const [username, setUsername] = useState('')
-    useEffect(() => {
-        Axios.get('http://localhost:3001/login')
-        .then((res)=>{
-            setUsername(res.data[0].username)
-            // console.log(res.data[0].username) 
-        })
-    }, [])
+    // const [username, setUsername] = useState('')
+    // useEffect(() => {
+    //     Axios.get('http://localhost:3001/login')
+    //     .then((res)=>{
+    //         setUsername(res.data[0].username)
+    //         console.log(res.data[0].username) 
+    //     })
+    // }, [])
 
     const logout = async (e)=>  {
         e.preventDefault()
 
         Axios.get('http://localhost:3001/logout')
         .then((res)=>{
-            window.localStorage.setItem('user', 'logged_out') 
             window.location = '/login'
         })
     }
@@ -168,7 +167,7 @@ function Home() {
                                                 <a href="javascript:void(0)">
                                                     <div className="user-img"> <img src="../assets/images/users/4.jpg" alt="user" className="img-circle"/> <span className="profile-status offline pull-right"></span> </div>
                                                     <div className="mail-contnet">
-                                                        <h5>{username}</h5> <span className="mail-desc">Just see the my admin!</span> <span className="time">9:02 AM</span> </div>
+                                                        <h5>Mark</h5> <span className="mail-desc">Just see the my admin!</span> <span className="time">9:02 AM</span> </div>
                                                 </a>
                                             </div>
                                         </li>
@@ -332,7 +331,7 @@ function Home() {
                     {/* <!-- Sidebar navigation--> */}
                     <nav className="sidebar-nav">
                         <ul id="sidebarnav">
-                            <li className="user-pro"> <a className="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user-img" className="img-circle"/><span className="hide-menu">{username}</span></a>
+                            <li className="user-pro"> <a className="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user-img" className="img-circle"/><span className="hide-menu">Mark</span></a>
                                 <ul aria-expanded="false" className="collapse">
                                     <li><a href="javascript:void(0)"><i className="ti-user"></i> My Profile</a></li>
                                     <li><a href="javascript:void(0)"><i className="ti-wallet"></i> My Balance</a></li>

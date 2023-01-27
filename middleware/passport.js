@@ -78,25 +78,6 @@ const isAdmin = (req, res, next)=> {
     }
 }
  
-const userExists = (req, res, next)=> {
-    if (req.isAuthenticated) {
-        con.query('SELECT * from users where username=?', [req.body.username], (error, results, fields)=> {
-            if(error) {
-                console.log("Error")
-            }
-            else if(results.length>0) {
-                res.redirect('/userAlreadyExists')    
-            }
-            else { 
-                next() 
-            }
-        })
-    }
-    else {
-        res.json({ message: 'not authorized'})
-        res.redirect('/notAuthorized')
-    }
-}
 
 const isAuth = passport.authenticate('local', {
     successRedirect: '/login-success',
@@ -106,7 +87,6 @@ const isAuth = passport.authenticate('local', {
 module.exports = {
     isAuth,
     isAdmin,
-    userExists,
     auth,
     user
 }

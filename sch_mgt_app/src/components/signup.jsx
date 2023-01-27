@@ -27,7 +27,7 @@ function SignUp() {
         e.preventDefault()
         if (re_password === password) {
             try {
-                await Axios.post('http://localhost:3001/signup/new', {
+                await Axios.post('http://localhost:3001/register', {
                     username: username,
                     email: email,
                     role: role,

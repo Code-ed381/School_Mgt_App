@@ -55,21 +55,23 @@ import {
 // )
 
 const auth = ()=> {
-  const user = window.localStorage.getItem('user')
-
-  if(user != 'logged_in') {
-    window.location = '/login'
-  }
+  Axios.get('http://localhost:3001/authenticate')
+  .then((res)=>{
+    if( res.data.message === "User not authenticated") {
+      alert("come")
+      window.location = '/login'
+    }
+  })
 }
 
 
 const App = createBrowserRouter([
   {
-    path: "",
+    path: "/",
     element: <Home/>,
     children:[
       { 
-        path: '/',
+        path: 'home',
         element: <Dashboard/>,
         loader: ()=> {auth()}
       },

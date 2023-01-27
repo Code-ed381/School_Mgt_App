@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 const Login = ()=> {
     const [user, setUser] = useState('');
-    const [mail, setMail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
 
@@ -26,16 +26,18 @@ const Login = ()=> {
     const handleClick = async (e)=> {
         e.preventDefault()
 
-        Axios.post('http://localhost:3001/login/password', {
-            username: mail,
+        Axios.post('http://localhost:3001/login', {
+            username: username,
             password: password
         })
         .then((res)=> {
-            console.log(res)
             try {
-                window.localStorage.setItem('user', res.data.message)
-                window.location = '/'
-                setUser(res.data.message)
+                if ( res.data.message === 'logged_in') {
+                    // window.location = 'home'
+                }
+                else {
+                    setMessage(res.data.message)
+                } 
             }
             catch (err) {
                 console.log(err)
@@ -62,9 +64,9 @@ const Login = ()=> {
                                             name = "username"
                                             type="text" 
                                             required 
-                                            placeholder="Username"
+                                            placeholder="Username or email"
                                             onChange={(e) => { 
-                                                setMail(e.target.value)
+                                                setUsername(e.target.value)
                                             }}
                                         /> 
                                     </div>
