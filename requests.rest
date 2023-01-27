@@ -1,1 +1,15 @@
-POST  http://localhost:3001/login-password
+POST  http://localhost:3001/login
+content-type: application/json
+
+{
+    "username": "edwinadjei381@gmail.com",
+    "password": "shadow"
+}
+
+
+###
+GET http://localhost:3001/authenticate
+
+
+###
+GET http://localhost:3001/getusers

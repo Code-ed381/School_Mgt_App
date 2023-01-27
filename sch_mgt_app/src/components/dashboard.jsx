@@ -7,6 +7,15 @@ const Dashboard = ()=> {
     const [data, setData] = useState([]);
     const [values, setValues] = useState([]);
 
+    useEffect(() => {
+        Axios.get('http://localhost:3001/getusers')
+        .then((res)=>{
+            setData(Object.keys(res.data[0]))
+            setValues(Object.values(res.data))
+            console.log(res)
+        })
+    }, []) 
+
     const listItems = data.map((data) =>  
         <th>{data}</th>  
     );  
@@ -31,14 +40,6 @@ const Dashboard = ()=> {
     //     setData(data);
     // }
 
-    useEffect(() => {
-        Axios.get('http://localhost:3001/getusers')
-        .then((res)=>{
-            setData(Object.keys(res.data[0]))
-            setValues(Object.values(res.data))
-            // console.log(res.data)
-        })
-    }, [])
 
 
   return (

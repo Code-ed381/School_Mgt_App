@@ -1,35 +1,39 @@
 const express = require('express');
-const { registerView, loginView, GetUsersView } = require('../controllers/signup-controller');
+const { registerView, loginView, GetUsersView, AuthView } = require('../controllers/controller');
 const { userExists, isAuth, auth, user } = require("../middleware/passport");
 const app = express.Router();
-const { createTokens } = require('../data/tokens')
+const { validateToken } = require('../middleware/tokens')
 
+//Register new user 
+app.post('/register', registerView) 
 
- 
-//CRUD for sch_mgt_app
-//Create
-app.post('/signup/new', userExists, registerView)
+//Login user
+app.post('/login', loginView)
+
+app.get('/', validateToken, (req, res, next) => {
+    res.send({ message: 'authorized'}) 
+})
+
+app.get('/authenticate', validateToken, (req, res, next) => {
+    res.send({ message: 'authenticated'})
+})
 
 //Read
 app.post('/login/password', isAuth, (req, res, next) =>{
-    const accessToken = createTokens(user)
-    res.cookie('access-token', accessToken, {
-        maxAge: 60*60*24*30*1000,
-    })
+    // const accessToken = createTokens(user)
+    // res.cookie('access-token', accessToken, {
+    //     maxAge: 60*60*24*30*1000,
+    // })
 });
 
 
-app.get('/getusers',auth, GetUsersView);
+app.get('/getusers', GetUsersView);
 
-app.get('/login', auth, loginView)
 
 app.get('/signup', (req, res, next) => {
     res.render('register') 
 })
 
-app.get('/', auth, (req, res, next) => {
-    res.send({ message: 'authorized'})
-})
 
 app.get('/login-success', (req, res, next)=> {
     res.json({message:'logged_in'}) 
@@ -40,15 +44,13 @@ app.get('/login-failure', (req, res, next)=> {
 })
 
 app.get('/logout', (req, res, next)=> {
-    req.logout(function(err) {
-        if (err) { console.log(err) }
-        res.json({message: 'Logged out'})
-    });
+    res.clearCookie('access-token')
+    res.end()
 })
 
-app.get('/userAlreadyExists', (req, res, next)=> {
-    res.json({message: "User already exists"})
-})
+// app.get('/userAlreadyExists', (req, res, next)=> {
+//     res.json({message: "User already exists"})
+// })
 
 // app.get('/notAuthorized', (req, res, next)=> {
 //     res.redirect('/login')
