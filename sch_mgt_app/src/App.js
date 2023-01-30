@@ -7,54 +7,11 @@ import Students from "./components/students";
 import Profile from "./components/profile";
 import Home from "./components/home";
 import Dashboard from "./components/dashboard";
-import Admin from "./components/admin";
-import Landing from "./components/landing_page";
 import Axios from "axios";
-
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-
-// const App = ()=> {
-//   const [loggedIn, setLoggedIn ] = useState(true)
-//   const toggleRoute = ()=> {
-//     setLoggedIn(false);
-//   }
-
-//   return (
-//     <>
-//       <Router>
-//         <Routes>
-//           <Route path="/" element={<Home/>}>
-//             <Route path="" element={<Dashboard/>}/>
-//             <Route path="students" element={<Students/>} />
-//             <Route path="profile" element={<Profile/>} />
-//             <Route path="dashboard" element={<Dashboard/>} />
-//           </Route>
-//         </Routes>
-//       </Router>
-//     </>
-//   )
-// }
+import {createBrowserRouter} from "react-router-dom";
 
 
-// const App = createBrowserRouter(
-//   createRoutesFromElements(
-//     <Route element={<Home/>}>
-//       <Route path="" element={<Dashboard/>}/>
-//       <Route path="students" element={<Students/>} />
-//       <Route path="profile" element={<Profile/>} />
-//       <Route path="dashboard" element={<Dashboard/>} />
-//     </Route>
-//   )
-// )
-
-const auth = ()=> {
+const auth = ()=> { 
   Axios.get('http://localhost:3001/authenticate')
   .then((res)=>{
     if( res.data.message === "User not authenticated") {

@@ -1,9 +1,11 @@
-POST  http://localhost:3001/login
+POST  http://localhost:3001/register
 content-type: application/json
 
 {
-    "username": "edwinadjei381@gmail.com",
-    "password": "shadow"
+    "username": "Eddy",
+    "password": "shadow",
+    "email": "edwinadjei381@gmail.com",
+    "role": "admin"
 }
 
 
@@ -12,4 +14,4 @@ GET http://localhost:3001/authenticate
 
 
 ###
-GET http://localhost:3001/getusers
+GET http://localhost:8080/marley

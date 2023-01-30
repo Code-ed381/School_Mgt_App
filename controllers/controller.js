@@ -1,13 +1,14 @@
 const con = require("../config/database");
 const bcrypt = require('bcrypt')
 const { createTokens } = require('../middleware/tokens')
+const decode = require('jwt-decode')
 
  
 //CRUD for sch_mgt_app
 //Create
 
 const registerView =  (req, res, next)=>{
-    const {email, username, password, role } = req.body
+    const { username, password, email, role } = req.body 
 
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(password, salt, (err, hash) => {
@@ -40,12 +41,12 @@ const  loginView = async (req, res, next) => {
                     const accessToken = createTokens(results) 
     
                     res.cookie("access-token", accessToken, {
-                        maxAge: 20000 * 3 * 10,
-                        httpOnly: true,
-                        sameSite: "None",
-                        secure: true
+                        maxAge: 20000 * 3 * 10
                     });
-                    res.json({message: "logged_in"})
+    
+                    res.json({message: decode(accessToken)})
+
+                    // console.log(decode(accessToken))
                 }
             }) 
         }

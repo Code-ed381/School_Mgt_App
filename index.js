@@ -2,7 +2,7 @@ const express = require("express");
 const con = require("./config/database");
 const cookieParser = require("cookie-parser");
 // const set_session = require("./middleware/session");
-var passport = require('passport');
+// var passport = require('passport');
 const app = express();
 const cors = require("cors");
 const bodyParser = require('body-parser');
@@ -11,7 +11,7 @@ require('dotenv').config()
 
 app.use(cookieParser())
 app.use(express.json())
-app.use(cors)
+app.use(cors())
 // app.use(set_session)
 // app.use(passport.initialize())
 // app.use(passport.session())
@@ -24,7 +24,7 @@ con.connect(function(err) {
     console.log("Database Connected!")
   }
   else {
-    throw err; 
+    throw err;  
   }
 });
 
