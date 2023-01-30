@@ -41,8 +41,7 @@ const  loginView = async (req, res, next) => {
                     const accessToken = createTokens(results) 
     
                     res.cookie("access-token", accessToken, {
-                        maxAge: 20000 * 3 * 10,
-                        httpOnly: true 
+                        maxAge: 20000 * 3 * 10
                     });
     
                     res.json({message: decode(accessToken)})
