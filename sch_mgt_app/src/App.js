@@ -36,7 +36,12 @@ const App = createBrowserRouter([
         path: 'profile',
         element: <Profile/>,
         loader: ()=> {auth()}
-      }
+      },
+      {
+        path: 'students',
+        element: <Students/>,
+        loader: ()=> {auth()}
+      },
     ]
   },
   {

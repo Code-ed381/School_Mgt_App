@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerView, loginView, GetUsersView, AuthView } = require('../controllers/controller');
+const { registerView, loginView, GetUsersView, GetStudentsView, AuthView } = require('../controllers/controller');
 const { userExists, isAuth, auth, user } = require("../middleware/passport");
 const app = express.Router();
 const { validateToken } = require('../middleware/tokens')
@@ -27,7 +27,9 @@ app.post('/login/password', isAuth, (req, res, next) =>{
 });
 
 
-app.get('/getusers', GetUsersView);
+app.get('/users', GetUsersView);
+
+app.get('/students', GetStudentsView);
 
 
 app.get('/signup', (req, res, next) => {
