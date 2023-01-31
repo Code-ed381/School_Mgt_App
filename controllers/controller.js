@@ -56,7 +56,17 @@ const  loginView = async (req, res, next) => {
 
 
 const GetUsersView = (req, res, next) => {
-    con.query(`SELECT user_id,username,email,age,phone_num,role,first_name,middle_name,last_name,nationality FROM users`, (err, results, fields) => {
+    con.query(`SELECT first_name,last_name,username,date_of_birth,phone,grade_id,address,town_of_birth,role,email,profile_id FROM users RIGHT JOIN profile ON users.user_id=profile.user_id`, (err, results, fields) => {
+        if (err) throw err
+        console.log(results)
+        res.send(results)
+    }) 
+}
+
+const GetFilteredUsersView = (req, res, next) => {
+    const { role } = req.body 
+
+    con.query(`SELECT first_name,last_name,username,date_of_birth,phone,grade_id,address,town_of_birth,role,email FROM users RIGHT JOIN profile ON users.user_id=profile.user_id where role = ?`,[role], (err, results, fields) => {
         if (err) throw err
         res.send(results)
     }) 
@@ -73,5 +83,6 @@ module.exports = {
     registerView,
     loginView,
     GetUsersView,
-    GetStudentsView
+    GetStudentsView,
+    GetFilteredUsersView
 }

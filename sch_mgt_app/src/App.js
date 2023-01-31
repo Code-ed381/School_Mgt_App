@@ -32,7 +32,7 @@ const App = createBrowserRouter([
         element: <Dashboard/>,
         loader: ()=> {auth()}
       },
-      {
+      { 
         path: 'profile',
         element: <Profile/>,
         loader: ()=> {auth()}
