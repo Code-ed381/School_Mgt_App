@@ -62,8 +62,16 @@ const GetUsersView = (req, res, next) => {
     }) 
 }
 
+const GetStudentsView = (req, res, next) => {
+    con.query(`SELECT first_name, last_name, grade, date_of_birth FROM students`, (err, results, fields) => {
+        if (err) throw err
+        res.send(results)
+    }) 
+}
+
 module.exports = {
     registerView,
     loginView,
-    GetUsersView
+    GetUsersView,
+    GetStudentsView
 }

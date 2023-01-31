@@ -8,14 +8,13 @@ const Dashboard = ()=> {
     const [values, setValues] = useState([]);
 
     useEffect(() => {
-        Axios.get('http://localhost:3001/getusers')
+        Axios.get('http://localhost:3001/users')
         .then((res)=>{
             setData(Object.keys(res.data[0]))
             setValues(Object.values(res.data))
             console.log(res)
         })
     }, []) 
-
     const listItems = data.map((data) =>  
         <th>{data}</th>  
     );  
@@ -33,6 +32,7 @@ const Dashboard = ()=> {
         <td>{values.last_name}</td>
         <td>{values.nationality}</td>
     </tr>  
+
 );  
 
     // const getData = async()=> {
