@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 const Dashboard = ()=> {
     const [data, setData] = useState([]);
     const [values, setValues] = useState([]);
+    const [role, setRole] = useState('');
 
     useEffect(() => {
         Axios.get('http://localhost:3001/users')
@@ -15,25 +16,56 @@ const Dashboard = ()=> {
             console.log(res)
         })
     }, []) 
+
+    // const filter =  async (e)=> {
+    //     e.preventDefault()
+    //     // setRole(e.target.value)
+
+    //     Axios.post('http://localhost:3001/users', {
+    //         role: role,
+    //     })
+    //     .then((res)=> {
+    //         setValues(Object.values(res.data))
+    //     }) 
+    // }
+
     const listItems = data.map((data) =>  
         <th>{data}</th>  
+        
     );  
 
     const dbvalues = values.map((values) =>  
     <tr>
-        <td>{values.user_id}</td>
-        <td>{values.username}</td>
-        <td>{values.email}</td>
-        <td>{values.age}</td>
-        <td>{values.phone_num}</td>
-        <td>{values.role}</td>
         <td>{values.first_name}</td>
-        <td>{values.middle_name}</td>
         <td>{values.last_name}</td>
-        <td>{values.nationality}</td>
-    </tr>  
+        <td>{values.username}</td>
+        <td>{values.date_of_birth}</td>
+        <td>{values.phone}</td>
+        <td>{values.grade_id}</td>
+        <td>{values.address}</td>
+        <td>{values.town_of_birth}</td>
+        <td>{values.role}</td>
+        <td>{values.email}</td>
+        <td>
+            <button type="button" class="btn btn-danger"><i class="ti-trash"></i></button> .
+            <button type="button" class="btn btn-info"><i class="ti-pencil"></i></button>
+        </td>
+    </tr> )
 
-);  
+    const staff = values.filter(item => item.role === role).map((values) =>  
+    <tr>
+        <td>{values.first_name}</td>
+        <td>{values.last_name}</td>
+        <td>{values.username}</td>
+        <td>{values.date_of_birth}</td>
+        <td>{values.phone}</td>
+        <td>{values.grade_id}</td>
+        <td>{values.address}</td>
+        <td>{values.town_of_birth}</td>
+        <td>{values.role}</td>
+        <td>{values.email}</td>
+        <td><button value={values.profile_id}></button></td>
+    </tr> );  
 
     // const getData = async()=> {
     //     const { data } = await Axios.get('http://localhost:3001/getusers');
@@ -87,18 +119,65 @@ const Dashboard = ()=> {
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">All Users</h4>
+                            <h4 class="card-title">{role}</h4>
+                            <div class="btn-group">
+                                            <button type="button" class="btn btn-danger dropdown-toggle text-white"
+                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Filter users by role
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a 
+                                                    class="dropdown-item" 
+                                                    href="#"
+                                                    onClick={staff}
+                                                >
+                                                    Staff
+                                                </a>
+                                                {/* <input  
+                                                    class="dropdown-item" 
+                                                    type='submit'
+                                                    value='staff'
+                                                    onClick={filter}
+                                                /> */}
+                                                
+                                                <a 
+                                                    class="dropdown-item"   
+                                                    href="#"
+                                                    // onClick={(e) => { 
+                                                    //     setRole('student')
+                                                    //     filter()
+                                                    // }}
+                                                >
+                                                    Students
+                                                </a>
+                                                <div class="dropdown-divider"></div>
+                                                <a 
+                                                    class="dropdown-item" 
+                                                    href="#"
+                                                    // onClick={(e) => { 
+                                                    //     setRole('admin')
+                                                    //     filter()
+                                                    // }}
+                                                >
+                                                    Admin
+                                                </a>
+                                            </div>
+                                        </div>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            {/* <th>#</th>
                                             <th>First Name</th>
                                             <th>Last Name</th>
                                             <th>Username</th>
-                                            <th>Role</th> */}
-
-                                            {listItems}
+                                            <th>Date of Birth</th>
+                                            <th>Phone Number</th>
+                                            <th>Grade</th>
+                                            <th>Address</th>
+                                            <th>Hometown</th>
+                                            <th>Role</th>
+                                            <th>Email</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -106,6 +185,7 @@ const Dashboard = ()=> {
                                             {dbvalues}
                                         </tr> */}
                                         {dbvalues}
+
                                     </tbody>
                                 </table>
                             </div>
