@@ -14,4 +14,4 @@ GET http://localhost:3001/authenticate
 
 
 ###
-GET http://localhost:8080/marley
+DELETE  http://localhost:3001/users/1

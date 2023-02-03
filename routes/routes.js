@@ -7,7 +7,9 @@ const {
     loginView, 
     GetUsersView, 
     GetStudentsView, 
-    GetFilteredUsersView 
+    GetFilteredUsersView,
+    UpdateView,
+    DeleteView
 } = require('../controllers/controller');
 
 //Register new user 
@@ -32,12 +34,16 @@ app.post('/login/password', isAuth, (req, res, next) =>{
     // })
 });
 
+app.put('/update/:id', UpdateView);
+
+app.delete('/users/:id', DeleteView);
+
 
 app.get('/users', GetUsersView);
 
 app.post('/users', GetFilteredUsersView);
 
-app.get('/students', GetStudentsView);
+app.get('/students', GetStudentsView); 
 
 
 app.get('/signup', (req, res, next) => {

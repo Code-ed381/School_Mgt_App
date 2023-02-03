@@ -34,7 +34,9 @@ const Login = ()=> {
             window.location = 'home'
             setMessage(res.data.message)
 
-            localStorage.setItem("user", JSON.stringify(res.data.message))
+            
+
+            localStorage.setItem("user", res.data.message)
             // try {
             //     if ( res.data.message === 'logged_in') {
             //     }
