@@ -3,7 +3,7 @@ const mysql = require('mysql');
 module.exports =  mysql.createConnection({
     host: "localhost",
     user: "root",
-    database: 'sch_mgt_db',
+    database: 'school_app',
     multipleStatements: true
 });
   

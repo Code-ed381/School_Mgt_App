@@ -8,11 +8,11 @@ const decode = require('jwt-decode')
 //Create
 
 const registerView =  (req, res, next)=>{
-    const { username, password, email, role } = req.body 
+    const { username, password, email } = req.body 
 
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(password, salt, (err, hash) => {
-            con.query(`INSERT INTO users (email, username, hash, salt, role) VALUES (?, ?, ?, ?, ?)`,[ email, username, hash, salt, role], (error, result) => {
+            con.query(`INSERT INTO users (email, username, hash, salt) VALUES (?, ?, ?, ?)`,[ email, username, hash, salt], (error, result) => {
                 if (error) return res.json({message: "Username already exist"}); 
                 res.json({message:'logged_in'}) 
                 console.log(result) 
@@ -24,7 +24,7 @@ const registerView =  (req, res, next)=>{
 const  loginView = async (req, res, next) => {
     const { username, password } = req.body
 
-    con.query(`SELECT username, hash, user_id FROM users WHERE email = ? OR username = ?`, [username, username], (err, results, fields) => {
+    con.query(`SELECT email, hash, user_id FROM users WHERE email = ?`, [username], (err, results, fields) => {
         if (err) return res.json({message: err})
 
         if (!results[0].hash) {
@@ -41,10 +41,11 @@ const  loginView = async (req, res, next) => {
                     const accessToken = createTokens(results) 
     
                     res.cookie("access-token", accessToken, {
-                        maxAge: 20000 * 3 * 10
+                        maxAge: 20000 * 3 * 10,
+                        httpOnly: true 
                     });
     
-                    res.json({message: decode(accessToken)})
+                    res.json({message: accessToken})
 
                     // console.log(decode(accessToken))
                 }
@@ -56,7 +57,7 @@ const  loginView = async (req, res, next) => {
 
 
 const GetUsersView = (req, res, next) => {
-    con.query(`SELECT first_name,last_name,username,date_of_birth,phone,grade_id,address,town_of_birth,role,email,profile_id FROM users RIGHT JOIN profile ON users.user_id=profile.user_id`, (err, results, fields) => {
+    con.query(`SELECT * FROM users CROSS JOIN students_profile`, (err, results, fields) => {
         if (err) throw err
         console.log(results)
         res.send(results)
@@ -66,7 +67,7 @@ const GetUsersView = (req, res, next) => {
 const GetFilteredUsersView = (req, res, next) => {
     const { role } = req.body 
 
-    con.query(`SELECT first_name,last_name,username,date_of_birth,phone,grade_id,address,town_of_birth,role,email FROM users RIGHT JOIN profile ON users.user_id=profile.user_id where role = ?`,[role], (err, results, fields) => {
+    con.query(`SELECT first_name,last_name,username,dob,phone,grade_id,address,hometown,email FROM users RIGHT JOIN students_profile ON users.id=students_profile.user where role = ?`,[role], (err, results, fields) => {
         if (err) throw err
         res.send(results)
     }) 
@@ -79,10 +80,34 @@ const GetStudentsView = (req, res, next) => {
     }) 
 }
 
+
+const UpdateView = (req, res) => {
+    const id = req.params.id;
+    const data = {
+      name: req.body.name,
+      age: req.body.age
+    };
+  
+    let sql = "UPDATE users SET ? WHERE id = ?";
+    let query = connection.query(sql, [data, id], (err, results) => {
+      if(err) throw err;
+      res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+    });
+}
+
+const DeleteView = (req, res) => {
+    con.query("DELETE FROM users WHERE id = ?", [req.params.id], (err, results) => {
+        res.send("Deleted successfully")
+        console.log(results)
+    })
+}
+
 module.exports = {
     registerView,
     loginView,
     GetUsersView,
     GetStudentsView,
-    GetFilteredUsersView
+    GetFilteredUsersView,
+    UpdateView,
+    DeleteView
 }

@@ -11,15 +11,15 @@ import Axios from "axios";
 import {createBrowserRouter} from "react-router-dom";
 
 
-const auth = ()=> { 
-  Axios.get('http://localhost:3001/authenticate')
-  .then((res)=>{
-    if( res.data.message === "User not authenticated") {
-      alert("come")
-      window.location = '/login'
-    }
-  })
-}
+// const auth = ()=> { 
+//   Axios.get('http://localhost:3001/authenticate')
+//   .then((res)=>{
+//     if( res.data.message === "User not authenticated") {
+//       alert("come")
+//       window.location = '/login'
+//     }
+//   })
+// }
 
 
 const App = createBrowserRouter([
@@ -30,17 +30,17 @@ const App = createBrowserRouter([
       { 
         path: 'home',
         element: <Dashboard/>,
-        loader: ()=> {auth()}
+        // loader: ()=> {auth()}
       },
       { 
         path: 'profile',
         element: <Profile/>,
-        loader: ()=> {auth()}
+        // loader: ()=> {auth()}
       },
       {
         path: 'students',
         element: <Students/>,
-        loader: ()=> {auth()}
+        // loader: ()=> {auth()}
       },
     ]
   },

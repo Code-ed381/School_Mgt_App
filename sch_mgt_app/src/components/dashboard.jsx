@@ -3,75 +3,108 @@ import Axios from "axios";
 import { Link } from "react-router-dom";
 
 
+// const UpdateRow = ({ row, updateRow }) => {
+//     const [updatedData, setUpdatedData] = useState({
+//       id: row.id,
+//       first_name: row.first_name,
+//       last_name: row.last_name,
+//       username: row.username,
+//       dob: row.dob,
+//       phone: row.phone,
+//       class: row.class,
+//       address: row.address,
+//       town_of_birth: row.hometown,
+//       email: row.email
+//     });
+  
+//     useEffect(() => {
+//       setUpdatedData({
+//         id: row.id,
+//         first_name: row.first_name,
+//         last_name: row.last_name,
+//         username: row.username,
+//         date_of_birth: row.date_of_birth,
+//         phone: row.phone,
+//         grade_id: row.grade_id,
+//         address: row.address,
+//         town_of_birth: row.town_of_birth,
+//         role: row.role,
+//         email: row.email
+//       });
+//     }, [row]);
+  
+//     const handleChange = (event) => {
+//       setUpdatedData({
+//         ...updatedData,
+//         [event.target.name]: event.target.value
+//       });
+//     };
+  
+//     const handleSubmit = (event) => {
+//       event.preventDefault();
+//       updateRow(updatedData);
+//     };
+    
+//     return (
+//         <div class="col-md-4">
+//             <div id="responsive-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style={{display: "none"}}>
+//                 <div class="modal-dialog">
+//                     <div class="modal-content">
+//                         <div class="modal-header">
+//                             <h4 class="modal-title">Edit Profile</h4>
+//                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+//                         </div>
+//                         <div class="modal-body">
+//                             <form>
+//                                 <div class="form-group">
+//                                     <label for="recipient-name" class="form-label">First name</label>
+//                                     <input type="text" class="form-control" id="recipient-name" value={row.first_name}/>
+//                                 </div>
+//                                 <div class="form-group">
+//                                     <label for="message-text" class="form-label">Message:</label>
+//                                     <textarea class="form-control" id="message-text"></textarea>
+//                                 </div>
+//                             </form>
+//                         </div>
+//                         <div class="modal-footer">
+//                             <button type="button" class="btn btn-default waves-effect" data-bs-dismiss="modal">Close</button>
+//                             <button type="button" class="btn btn-danger waves-effect waves-light text-white">Save changes</button>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     )
+// }
+
 const Dashboard = ()=> {
-    const [data, setData] = useState([]);
-    const [values, setValues] = useState([]);
-    const [role, setRole] = useState('');
+    const [rows, setRows] = useState([]);
 
     useEffect(() => {
         Axios.get('http://localhost:3001/users')
         .then((res)=>{
-            setData(Object.keys(res.data[0]))
-            setValues(Object.values(res.data))
-            console.log(res)
+            setRows(res.data)
         })
     }, []) 
 
-    // const filter =  async (e)=> {
-    //     e.preventDefault()
-    //     // setRole(e.target.value)
+    const updateRow = (updatedRow) => {
+        Axios.put(`http://localhost:3001/update/${updatedRow.id}`, updatedRow)
+        .then((response) => {
+            setRows(rows.map((row) => (row.id === updatedRow.id ? updatedRow : row)));
+        })
+        .catch((error) => {
+        console.error(error);
+        });
+    };
 
-    //     Axios.post('http://localhost:3001/users', {
-    //         role: role,
-    //     })
-    //     .then((res)=> {
-    //         setValues(Object.values(res.data))
-    //     }) 
-    // }
-
-    const listItems = data.map((data) =>  
-        <th>{data}</th>  
-        
-    );  
-
-    const dbvalues = values.map((values) =>  
-    <tr>
-        <td>{values.first_name}</td>
-        <td>{values.last_name}</td>
-        <td>{values.username}</td>
-        <td>{values.date_of_birth}</td>
-        <td>{values.phone}</td>
-        <td>{values.grade_id}</td>
-        <td>{values.address}</td>
-        <td>{values.town_of_birth}</td>
-        <td>{values.role}</td>
-        <td>{values.email}</td>
-        <td>
-            <button type="button" class="btn btn-danger"><i class="ti-trash"></i></button> .
-            <button type="button" class="btn btn-info"><i class="ti-pencil"></i></button>
-        </td>
-    </tr> )
-
-    const staff = values.filter(item => item.role === role).map((values) =>  
-    <tr>
-        <td>{values.first_name}</td>
-        <td>{values.last_name}</td>
-        <td>{values.username}</td>
-        <td>{values.date_of_birth}</td>
-        <td>{values.phone}</td>
-        <td>{values.grade_id}</td>
-        <td>{values.address}</td>
-        <td>{values.town_of_birth}</td>
-        <td>{values.role}</td>
-        <td>{values.email}</td>
-        <td><button value={values.profile_id}></button></td>
-    </tr> );  
-
-    // const getData = async()=> {
-    //     const { data } = await Axios.get('http://localhost:3001/getusers');
-    //     setData(data);
-    // }
-
+    const handleDelete = async (id) => {
+        try {
+            await Axios.delete(`http://localhost:3001/users/`+id);
+            // window.location.reload();
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
   return (
@@ -119,50 +152,49 @@ const Dashboard = ()=> {
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">{role}</h4>
+                            <h4 class="card-title"><center>USERS</center></h4>
                             <div class="btn-group">
-                                            <button type="button" class="btn btn-danger dropdown-toggle text-white"
-                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Filter users by role
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a 
-                                                    class="dropdown-item" 
-                                                    href="#"
-                                                    onClick={staff}
-                                                >
-                                                    Staff
-                                                </a>
-                                                {/* <input  
-                                                    class="dropdown-item" 
-                                                    type='submit'
-                                                    value='staff'
-                                                    onClick={filter}
-                                                /> */}
-                                                
-                                                <a 
-                                                    class="dropdown-item"   
-                                                    href="#"
-                                                    // onClick={(e) => { 
-                                                    //     setRole('student')
-                                                    //     filter()
-                                                    // }}
-                                                >
-                                                    Students
-                                                </a>
-                                                <div class="dropdown-divider"></div>
-                                                <a 
-                                                    class="dropdown-item" 
-                                                    href="#"
-                                                    // onClick={(e) => { 
-                                                    //     setRole('admin')
-                                                    //     filter()
-                                                    // }}
-                                                >
-                                                    Admin
-                                                </a>
-                                            </div>
-                                        </div>
+                                <button type="button" class="btn btn-danger dropdown-toggle text-white"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Filter users by role
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a 
+                                        class="dropdown-item" 
+                                        href="#"
+                                    >
+                                        Staff
+                                    </a>
+                                    {/* <input  
+                                        class="dropdown-item" 
+                                        type='submit'
+                                        value='staff'
+                                        onClick={filter}
+                                    /> */}
+                                    
+                                    <a 
+                                        class="dropdown-item"   
+                                        href="#"
+                                        // onClick={(e) => { 
+                                        //     setRole('student')
+                                        //     filter()
+                                        // }}
+                                    >
+                                        Students
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a 
+                                        class="dropdown-item" 
+                                        href="#"
+                                        // onClick={(e) => { 
+                                        //     setRole('admin')
+                                        //     filter()
+                                        // }}
+                                    >
+                                        Admin
+                                    </a>
+                                </div>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
@@ -175,23 +207,36 @@ const Dashboard = ()=> {
                                             <th>Grade</th>
                                             <th>Address</th>
                                             <th>Hometown</th>
-                                            <th>Role</th>
                                             <th>Email</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {/* <tr>
-                                            {dbvalues}
-                                        </tr> */}
-                                        {dbvalues}
-
+                                        {rows.map((row) =>  
+                                            <tr key={row.id}>
+                                                <td>{row.first_name}</td>
+                                                <td>{row.last_name}</td>
+                                                <td>{row.username}</td>
+                                                <td>{row.dob}</td>
+                                                <td>{row.phone}</td>
+                                                <td>{row.class}</td>
+                                                <td>{row.address}</td>
+                                                <td>{row.hometown}</td>
+                                                <td>{row.email}</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger" onClick={()=>handleDelete(row.id)}><i class="ti-trash"></i></button> .
+                                                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#responsive-modal"><i class="ti-pencil"></i></button>
+                                                </td>
+                                            </tr> )
+                                        }
                                     </tbody>
                                 </table>
                             </div>
+                            {/* <UpdateRow/> */}
                         </div>
                     </div>
                 </div>
+
             </div>
             {/* <!-- ============================================================== -->
             <!-- End PAge Content -->
