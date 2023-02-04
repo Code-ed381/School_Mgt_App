@@ -1,11 +1,15 @@
-POST  http://localhost:3001/register
-content-type: application/json
-
+POST  http://localhost:3001/addstudent,
+content-type: application/json;
 {
-    "username": "Eddy",
-    "password": "shadow",
-    "email": "edwinadjei381@gmail.com",
-    "role": "admin"
+    "first_name": "Frank",
+    "last_name": "Selah",
+    "phone": "057567890",
+    "student_class": "JHS 1",
+    "gender": "Male",
+    "address": "Mallam",
+    "hometown": "Tsuibleo",
+    "dob": "",
+    "user": 15
 }
 
 

@@ -70,6 +70,7 @@ function SignUp() {
     
     const logout = async (e)=>{
         e.preventDefault()
+        
         try {
             await Axios.get('http://localhost:3001/logout')
         }
@@ -86,7 +87,7 @@ function SignUp() {
                 <div class="login-register" style={{ backgroundImage: 'url(../assets/images/background/login-register.jpg)'}}>
                     <div class="login-box card">
                         <div class="card-body">
-                            <form class="form-horizontal form-material" id="loginform" action="index.html">
+                            <form class="form-horizontal form-material" id="loginform">
                                 <p className="alert alert-danger">{message}</p>
                                 <h3 class="text-center m-b-20">Sign Up</h3>
                                 <div class="form-group">

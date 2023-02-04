@@ -67,7 +67,7 @@ const AddStudentView = (req, res) => {
         user
     } = req.body
 
-    con.query('INSERT INTO students_profile VALUES (?,?,?,?,?,?,?,?,?)', [first_name,last_name,phone,student_class,gender,address,hometown,dob,user], (err, result)=> {
+    con.query(`INSERT INTO students_profile (first_name,last_name,phone,student_class,gender,address,hometown,dob,user) VALUES (?,?,?,?,?,?,?,?,?)`, [first_name,last_name,phone,student_class,gender,address,hometown,dob,user], (err, result)=> {
         if (err) console.log(err)
         return res.send(result)
     })
