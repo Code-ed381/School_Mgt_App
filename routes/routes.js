@@ -16,6 +16,8 @@ const {
 //Register new user 
 app.post('/register', registerView) 
 
+app.post('/users', AddStudentView); 
+
 //Login user
 app.post('/login', loginView)
 
@@ -46,7 +48,6 @@ app.get('/users', GetUsersView);
 
 app.get('/students', GetStudentsView); 
 
-app.post('/addstudent', AddStudentView); 
 
 
 app.get('/signup', (req, res, next) => {

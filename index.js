@@ -10,8 +10,8 @@ require('dotenv').config()
 
 
 app.use(cookieParser())
-app.use(express.json())
 app.use(cors())
+app.use(express.json())
 // app.use(set_session)
 // app.use(passport.initialize())
 // app.use(passport.session())

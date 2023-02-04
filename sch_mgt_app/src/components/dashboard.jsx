@@ -81,17 +81,16 @@ const qs = require('qs');
 
 const Dashboard = ()=> {
     const [rows, setRows] = useState([]);
-    const [data, setData] = useState({
-        first_name: '',
-        last_name: '',
-        phone: '',
-        student_class: '',
-        gender: '',
-        address: '',
-        hometown: '',
-        dob: null,
-        user: 13
-    })
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [student_class, setStudent_class] = useState('');
+    const [gender, setGender] = useState('');
+    const [address, setAddress] = useState('');
+    const [hometown, setHometown] = useState('');
+    const [dob, setDob] = useState(null);
+    const [user, setUser] = useState(15);
+
 
     useEffect(() => {
         Axios.get('http://localhost:3001/users')
@@ -100,42 +99,51 @@ const Dashboard = ()=> {
         })
     }, []) 
 
-    const handleChange = (e)=> {
-        setData({
-            ...data,
-            [e.target.name]: e.target.value
-        })
-    }
+    // const handleChange = (e)=> {
+    //     setData((prev)=>
+        
+    //     ({ ...prev,[e.target.name]: e.target.value}))
+    // }
 
-    const handleSubmit = (e)=> {
-        e.preventDefault();
+    const handleSubmit = async (e)=> {
+        e.preventDefault()
 
-        Axios.post('http://localhost:3001/addstudent', qs.data,
-        {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
+        try {
+            await Axios.post('http://localhost:3001/users',{
+                first_name: firstName,
+                last_name: lastName,
+                phone: phone,
+                student_class: student_class,
+                gender: gender,
+                address: address,
+                hometown: hometown,
+                dob: dob,
+                user: user
+            })
+            .then((res)=> {
+                alert("hello")
+                console.log(res.data);
+    
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+            
+        } catch (error) {
+            
         }
-        )
-        .then((res)=> {
-            console.log(res.data);
-
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
     }
 
-    const updateRow = (updatedRow) => {
-        Axios.put(`http://localhost:3001/update/${updatedRow.id}`, updatedRow)
-        .then((response) => {
-            setRows(rows.map((row) => (row.id === updatedRow.id ? updatedRow : row)));
-        })
-        .catch((error) => {
-        console.error(error);
-        });
-    };
-
+    // const updateRow = (updatedRow) => {
+    //     Axios.put(`http://localhost:3001/update/${updatedRow.id}`, updatedRow)
+    //     .then((response) => {
+    //         setRows(rows.map((row) => (row.id === updatedRow.id ? updatedRow : row)));
+    //     })
+    //     .catch((error) => {
+    //     console.error(error);
+    //     });
+    // };
+        
     const handleDelete = async (id) => {
         try {
             await Axios.delete(`http://localhost:3001/users/`+id)
@@ -267,7 +275,8 @@ const Dashboard = ()=> {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {rows.map((row) =>  
+                                        {rows.map((row) => 
+                                            
                                             <tr key={row.id}>
                                                 <td>{row.first_name}</td>
                                                 <td>{row.last_name}</td>
@@ -408,25 +417,46 @@ const Dashboard = ()=> {
                     </div>
                     <div class="modal-body">
                         <div class="card-body">
-                            <form action={handleSubmit} class="form-horizontal form-bordered">
+                            <form class="form-horizontal form-bordered">
                                 <div class="form-body">
                                     <div class="form-group row">
                                         <label class="control-label text-end col-md-3">First Name</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name='first_name' value={data.first_name} onChange={handleChange}/>
+                                            <input 
+                                                type="text" 
+                                                class="form-control" 
+                                                name='first_name' 
+                                                onChange={(e) => { 
+                                                    setFirstName(e.target.value)
+                                                }}
+                                            />
                                             <small class="form-control-feedback"> This is inline help </small> 
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="control-label text-end col-md-3">Last Name</label>
                                         <div class="col-md-9">
-                                            <input type="text"  class="form-control" name='last_name' value={data.last_name} onChange={handleChange}/>
-                                            <small class="form-control-feedback"> This is inline help </small> </div>
+                                            <input 
+                                                type="text"  
+                                                class="form-control" 
+                                                name='last_name' 
+                                                onChange={(e) => { 
+                                                    setLastName(e.target.value)
+                                                }}
+                                            />
+                                            <small class="form-control-feedback"> This is inline help </small> 
+                                        </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="control-label text-end col-md-3">Gender</label>
                                         <div class="col-md-9">
-                                            <select class="form-control form-select" name='gender' value={data.gender} onChange={handleChange}>
+                                            <select 
+                                                class="form-control form-select" 
+                                                name='gender' 
+                                                onChange={(e) => { 
+                                                    setGender(e.target.value)
+                                                }}
+                                            >
                                                 <option value="male">Male</option>
                                                 <option value="female">Female</option>
                                             </select>
@@ -435,31 +465,67 @@ const Dashboard = ()=> {
                                     <div class="form-group row">
                                         <label class="control-label text-end col-md-3">Phone number</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name='phone' value={data.phone} onChange={handleChange}/>
+                                            <input 
+                                                type="text" 
+                                                class="form-control" 
+                                                name='phone' 
+                                                onChange={(e) => { 
+                                                    setPhone(e.target.value)
+                                                }}
+                                            />
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="control-label text-end col-md-3">Class</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name='student_class' value={data.student_class} onChange={handleChange}/>
+                                            <input 
+                                                type="text" 
+                                                class="form-control" 
+                                                name='student_class' 
+                                                onChange={(e) => { 
+                                                    setStudent_class(e.target.value)
+                                                }}
+                                            />
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="control-label text-end col-md-3">Date of Birth</label>
                                         <div class="col-md-9">
-                                            <input type="date" class="form-control" placeholder="dd/mm/yyyy" name='dob' value={data.dob} onChange={handleChange}/>
+                                            <input 
+                                                type="date" 
+                                                class="form-control" 
+                                                placeholder="dd/mm/yyyy" 
+                                                name='dob' 
+                                                onChange={(e) => { 
+                                                    setDob(e.target.value)
+                                                }}
+                                            />
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="control-label text-end col-md-3">Hometown</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name='hometown' value={data.hometown} onChange={handleChange}/>
+                                            <input 
+                                                type="text" 
+                                                class="form-control" 
+                                                name='hometown' 
+                                                onChange={(e) => { 
+                                                    setHometown(e.target.value)
+                                                }}
+                                            />
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="control-label text-end col-md-3">Residential Address</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name='address' value={data.address} onChange={handleChange}/>
+                                            <input 
+                                                type="text" 
+                                                class="form-control" 
+                                                name='address' 
+                                                onChange={(e) => { 
+                                                    setAddress(e.target.value)
+                                                }}
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -468,7 +534,7 @@ const Dashboard = ()=> {
                                         <div class="col-md-12">
                                             <div class="row">
                                                 <div class="offset-sm-3 col-md-9">
-                                                    <button type="submit" class="btn btn-success text-white"> <i class="fa fa-check"></i> Submit</button>
+                                                    <button type="submit" class="btn btn-success text-white"> <i class="fa fa-check" onClick={handleSubmit}></i> Submit</button>
                                                     <button type="button" class="btn btn-inverse" data-bs-dismiss="modal">Cancel</button>
                                                 </div>
                                             </div>
