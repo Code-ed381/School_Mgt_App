@@ -121,10 +121,18 @@ const Dashboard = ()=> {
                 user: user
             })
             .then((res)=> {
-                alert("hello")
-                console.log(res.data);
-    
+                swal("User created successfully!", {
+                    icon: "success",
+                    button: false,
+                    timer: 3000
+                });
             })
+            .finally(
+                Axios.get('http://localhost:3001/users')
+                .then((res)=>{
+                    setRows(res.data)
+                })
+            )
             .catch((err)=>{
                 console.log(err)
             })
@@ -534,7 +542,7 @@ const Dashboard = ()=> {
                                         <div class="col-md-12">
                                             <div class="row">
                                                 <div class="offset-sm-3 col-md-9">
-                                                    <button type="submit" class="btn btn-success text-white"> <i class="fa fa-check" onClick={handleSubmit}></i> Submit</button>
+                                                    <button onClick={handleSubmit} data-bs-dismiss="modal" class="btn btn-success text-white"> <i class="fa fa-check" ></i> Submit</button>
                                                     <button type="button" class="btn btn-inverse" data-bs-dismiss="modal">Cancel</button>
                                                 </div>
                                             </div>
