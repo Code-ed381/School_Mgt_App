@@ -38,7 +38,7 @@ function SignUp() {
                     try {
                         if(res.data.message === 'logged_in') {
                             window.localStorage.setItem('user', res.data.message)
-                            navigate('/')
+                            navigate('/home')
                             setRole(res.data.message)
                         }
                         else {
