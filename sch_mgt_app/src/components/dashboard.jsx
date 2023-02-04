@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import swal from 'sweetalert';
+const qs = require('qs');
 
 
 // const UpdateRow = ({ row, updateRow }) => {
@@ -79,6 +81,17 @@ import { Link } from "react-router-dom";
 
 const Dashboard = ()=> {
     const [rows, setRows] = useState([]);
+    const [data, setData] = useState({
+        first_name: '',
+        last_name: '',
+        phone: '',
+        student_class: '',
+        gender: '',
+        address: '',
+        hometown: '',
+        dob: null,
+        user: 13
+    })
 
     useEffect(() => {
         Axios.get('http://localhost:3001/users')
@@ -86,6 +99,32 @@ const Dashboard = ()=> {
             setRows(res.data)
         })
     }, []) 
+
+    const handleChange = (e)=> {
+        setData({
+            ...data,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handleSubmit = (e)=> {
+        e.preventDefault();
+
+        Axios.post('http://localhost:3001/addstudent', qs.data,
+        {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+        )
+        .then((res)=> {
+            console.log(res.data);
+
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
 
     const updateRow = (updatedRow) => {
         Axios.put(`http://localhost:3001/update/${updatedRow.id}`, updatedRow)
@@ -99,12 +138,17 @@ const Dashboard = ()=> {
 
     const handleDelete = async (id) => {
         try {
-            await Axios.delete(`http://localhost:3001/users/`+id);
+            await Axios.delete(`http://localhost:3001/users/`+id)
+            .then((res)=> {
+                console.log(res)
+            })
             // window.location.reload();
         } catch (error) {
             console.log(error);
         }
     }
+
+
 
 
   return (
@@ -153,7 +197,16 @@ const Dashboard = ()=> {
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title"><center>USERS</center></h4>
-                            <div class="btn-group">
+                            <button 
+                                type="button" 
+                                class="btn btn-info text-white"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#verticalcenter"
+                                
+                            >
+                                <i class='fas fa-plus-circle'></i> Add new student
+                            </button>
+                            <div class="btn-group" style={{float: 'right'}}>
                                 <button type="button" class="btn btn-danger dropdown-toggle text-white"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Filter users by role
@@ -162,6 +215,7 @@ const Dashboard = ()=> {
                                     <a 
                                         class="dropdown-item" 
                                         href="#"
+                                        onClick={()=>{swal("Hello")}}
                                     >
                                         Staff
                                     </a>
@@ -207,6 +261,7 @@ const Dashboard = ()=> {
                                             <th>Grade</th>
                                             <th>Address</th>
                                             <th>Hometown</th>
+                                            <th>Gender</th>
                                             <th>Email</th>
                                             <th>Action</th>
                                         </tr>
@@ -219,13 +274,48 @@ const Dashboard = ()=> {
                                                 <td>{row.username}</td>
                                                 <td>{row.dob}</td>
                                                 <td>{row.phone}</td>
-                                                <td>{row.class}</td>
+                                                <td>{row.student_class}</td>
                                                 <td>{row.address}</td>
                                                 <td>{row.hometown}</td>
+                                                <td>{row.gender_type}</td>
                                                 <td>{row.email}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-danger" onClick={()=>handleDelete(row.id)}><i class="ti-trash"></i></button> .
-                                                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#responsive-modal"><i class="ti-pencil"></i></button>
+                                                    <button 
+                                                        type="button" 
+                                                        class="btn btn-danger" 
+                                                        onClick={()=>{
+                                                            swal({
+                                                                title: "Are you sure?",
+                                                                text: "Please confirm if you want this user deleted!",
+                                                                icon: "warning",
+                                                                buttons: {
+                                                                    cancel: true,
+                                                                    confirm: true},
+                                                                dangerMode: true,
+                                                            })
+                                                            .then((willDelete)=>{
+                                                                if(willDelete) {
+                                                                    handleDelete(row.user)
+                                                                    swal("User deleted successfully!", {
+                                                                        icon: "success",
+                                                                        button: false
+                                                                    });
+                                                                } 
+                                                            })
+                                                            .then(
+                                                                setTimeout(() => {
+                                                                    window.location.reload();
+                                                                },3000 )
+                                                            )
+                                                        }}
+                                                    ><i class="ti-trash"></i></button> .
+                                                    <button 
+                                                        type="button"  
+                                                        class="btn btn-info" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#responsive-modal"
+                                                        
+                                                    ><i class="ti-pencil"></i></button>
                                                 </td>
                                             </tr> )
                                         }
@@ -307,6 +397,95 @@ const Dashboard = ()=> {
         <!-- End Info box -->
         <!-- ============================================================== --> */}
       </div>
+
+
+        <div id="verticalcenter" class="modal" tabindex="-1" role="dialog" aria-labelledby="vcenter" aria-hidden="true">
+            <div class="modal-dialog bs-example-modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="vcenter">Add new student</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <form action={handleSubmit} class="form-horizontal form-bordered">
+                                <div class="form-body">
+                                    <div class="form-group row">
+                                        <label class="control-label text-end col-md-3">First Name</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name='first_name' value={data.first_name} onChange={handleChange}/>
+                                            <small class="form-control-feedback"> This is inline help </small> 
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label text-end col-md-3">Last Name</label>
+                                        <div class="col-md-9">
+                                            <input type="text"  class="form-control" name='last_name' value={data.last_name} onChange={handleChange}/>
+                                            <small class="form-control-feedback"> This is inline help </small> </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label text-end col-md-3">Gender</label>
+                                        <div class="col-md-9">
+                                            <select class="form-control form-select" name='gender' value={data.gender} onChange={handleChange}>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label text-end col-md-3">Phone number</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name='phone' value={data.phone} onChange={handleChange}/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label text-end col-md-3">Class</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name='student_class' value={data.student_class} onChange={handleChange}/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label text-end col-md-3">Date of Birth</label>
+                                        <div class="col-md-9">
+                                            <input type="date" class="form-control" placeholder="dd/mm/yyyy" name='dob' value={data.dob} onChange={handleChange}/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label text-end col-md-3">Hometown</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name='hometown' value={data.hometown} onChange={handleChange}/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label text-end col-md-3">Residential Address</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name='address' value={data.address} onChange={handleChange}/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="offset-sm-3 col-md-9">
+                                                    <button type="submit" class="btn btn-success text-white"> <i class="fa fa-check"></i> Submit</button>
+                                                    <button type="button" class="btn btn-inverse" data-bs-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {/* <div class="modal-footer">
+                        <button type="button" class="btn btn-info waves-effect text-white" data-bs-dismiss="modal">Close</button>
+                    </div> */}
+                </div>
+                {/* <!-- /.modal-content --> */}
+            </div>
+            {/* <!-- /.modal-dialog --> */}
+        </div>
     </>
   );
 }

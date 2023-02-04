@@ -9,7 +9,8 @@ const {
     GetStudentsView, 
     GetFilteredUsersView,
     UpdateView,
-    DeleteView
+    DeleteView,
+    AddStudentView
 } = require('../controllers/controller');
 
 //Register new user 
@@ -41,9 +42,11 @@ app.delete('/users/:id', DeleteView);
 
 app.get('/users', GetUsersView);
 
-app.post('/users', GetFilteredUsersView);
+// app.post('/users', GetFilteredUsersView);
 
 app.get('/students', GetStudentsView); 
+
+app.post('/addstudent', AddStudentView); 
 
 
 app.get('/signup', (req, res, next) => {

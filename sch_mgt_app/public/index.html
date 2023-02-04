@@ -28,6 +28,8 @@
     <link href="./dist/css/pages/login-register-lock.css" rel="stylesheet">
     <!-- Dashboard 1 Page CSS -->
     <link href="./dist/css/pages/dashboard1.css" rel="stylesheet">
+    <!--alerts CSS -->
+    <link href="./assets/node_modules/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -54,7 +56,7 @@
     -->
 
 
-
+    
     
     
     <!-- All Jquery -->
@@ -62,6 +64,9 @@
     <script src="./assets/node_modules/jquery/dist/jquery.min.js"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
     <script src="dist/js/perfect-scrollbar.jquery.min.js"></script>
+    <!-- Sweet-Alert  -->
+    <script src="./assets/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="./assets/node_modules/sweetalert2/sweet-alert.init.js"></script>
     <!-- Editable -->
     <script src="./assets/node_modules/jsgrid/db.js"></script>
     <script type="text/javascript" src="./assets/node_modules/jsgrid/jsgrid.min.js"></script>
@@ -92,20 +97,20 @@
 
     <!--Custom JavaScript -->
     <script type="text/javascript">
-        $(function() {
-            $(".preloader").fadeOut();
-        });
-        $(function() {
-            $('[data-bs-toggle="tooltip"]').tooltip()
-        });
-        // ============================================================== 
-        // Login and Recover Password 
-        // ============================================================== 
-        $('#to-recover').on("click", function() {
-            $("#loginform").slideUp();
-            $("#recoverform").fadeIn();
-        });
-      </script>
+      $(function() {
+        $(".preloader").fadeOut();
+      });
+      $(function() {
+        $('[data-bs-toggle="tooltip"]').tooltip()
+      });
+      // ============================================================== 
+      // Login and Recover Password 
+      // ============================================================== 
+      $('#to-recover').on("click", function() {
+        $("#loginform").slideUp();
+        $("#recoverform").fadeIn();
+      });
+    </script>
    
     
   </body>

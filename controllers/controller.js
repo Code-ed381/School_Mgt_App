@@ -54,6 +54,24 @@ const  loginView = async (req, res, next) => {
     })
 }
 
+const AddStudentView = (req, res) => {
+    const {
+        first_name,
+        last_name,
+        phone,
+        student_class,
+        gender,
+        address,
+        hometown,
+        dob,
+        user
+    } = req.body
+
+    con.query('INSERT INTO students_profile VALUES (?,?,?,?,?,?,?,?,?)', [first_name,last_name,phone,student_class,gender,address,hometown,dob,user], (err, result)=> {
+        if (err) console.log(err)
+        return res.send(result)
+    })
+}
 
 
 const GetUsersView = (req, res, next) => {
@@ -109,5 +127,6 @@ module.exports = {
     GetStudentsView,
     GetFilteredUsersView,
     UpdateView,
-    DeleteView
+    DeleteView,
+    AddStudentView
 }
