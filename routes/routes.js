@@ -14,7 +14,7 @@ const {
 } = require('../controllers/controller');
 
 //Register new user 
-app.post('/register', registerView) 
+app.post('/register', registerView)  
 
 app.post('/users', AddStudentView); 
 

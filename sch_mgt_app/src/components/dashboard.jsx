@@ -89,7 +89,7 @@ const Dashboard = ()=> {
     const [address, setAddress] = useState('');
     const [hometown, setHometown] = useState('');
     const [dob, setDob] = useState(null);
-    const [user, setUser] = useState(15);
+    const [user, setUser] = useState(16);
 
 
     useEffect(() => {
@@ -294,7 +294,7 @@ const Dashboard = ()=> {
                                                 <td>{row.student_class}</td>
                                                 <td>{row.address}</td>
                                                 <td>{row.hometown}</td>
-                                                <td>{row.gender_type}</td>
+                                                <td>{row.gender}</td>
                                                 <td>{row.email}</td>
                                                 <td>
                                                     <button 
@@ -465,6 +465,7 @@ const Dashboard = ()=> {
                                                     setGender(e.target.value)
                                                 }}
                                             >
+                                                <option>--Select gender--</option>
                                                 <option value="male">Male</option>
                                                 <option value="female">Female</option>
                                             </select>
