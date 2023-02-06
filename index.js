@@ -2,9 +2,9 @@ const express = require("express");
 const con = require("./config/database");
 const cookieParser = require("cookie-parser");
 // const set_session = require("./middleware/session");
-// var passport = require('passport');
+// var passport = require('passport'); 
 const app = express();
-const cors = require("cors");
+const cors = require("cors"); 
 const bodyParser = require('body-parser');
 require('dotenv').config()
 

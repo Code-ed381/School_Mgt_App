@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import Cookie from "js-cookie"
 
 const Login = ()=> {
     const [user, setUser] = useState('');
@@ -31,8 +32,9 @@ const Login = ()=> {
             password: password
         })
         .then((res)=> {
-            window.location = 'home'
+            // window.location = 'home'
             setMessage(res.data.message)
+            alert(Cookie.get('access-token'))
 
             
 

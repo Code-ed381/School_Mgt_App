@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 const { createTokens } = require('../middleware/tokens')
 const decode = require('jwt-decode')
 
+
  
 //CRUD for sch_mgt_app
 //Create
@@ -17,14 +18,14 @@ const registerView =  (req, res, next)=>{
                 res.json({message:'logged_in'}) 
                 console.log(result) 
             }) 
-        })
+        }) 
     })
 }
 
 const  loginView = async (req, res, next) => {
     const { username, password } = req.body
 
-    con.query(`SELECT email, hash, user_id FROM users WHERE email = ?`, [username], (err, results, fields) => {
+    con.query(`SELECT email, hash FROM users WHERE email = ?`, [username], (err, results, fields) => {
         if (err) return res.json({message: err})
 
         if (!results[0].hash) {
@@ -57,7 +58,7 @@ const  loginView = async (req, res, next) => {
 const AddStudentView = (req, res) => {
     const {
         first_name,
-        last_name,
+        last_name, 
         phone,
         student_class,
         gender,
@@ -69,13 +70,13 @@ const AddStudentView = (req, res) => {
 
     con.query(`INSERT INTO students_profile (first_name,last_name,phone,student_class,gender,address,hometown,dob,user) VALUES (?,?,?,?,?,?,?,?,?)`, [first_name,last_name,phone,student_class,gender,address,hometown,dob,user], (err, result)=> {
         if (err) console.log(err)
-        return res.send(result)
+        return res.send(result) 
     })
 }
 
 
 const GetUsersView = (req, res, next) => {
-    con.query(`SELECT * FROM users CROSS JOIN students_profile`, (err, results, fields) => {
+    con.query(`SELECT * FROM students_profile CROSS JOIN users`, (err, results, fields) => {
         if (err) throw err
         console.log(results)
         res.send(results)
