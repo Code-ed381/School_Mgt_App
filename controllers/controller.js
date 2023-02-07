@@ -55,33 +55,10 @@ const  loginView = async (req, res, next) => {
     })
 }
 
-const AddStudentView = (req, res) => {
-    const {
-        first_name,
-        last_name, 
-        phone,
-        student_class,
-        gender,
-        address,
-        hometown,
-        dob,
-        user
-    } = req.body
-
-    con.query(`INSERT INTO students_profile (first_name,last_name,phone,student_class,gender,address,hometown,dob,user) VALUES (?,?,?,?,?,?,?,?,?)`, [first_name,last_name,phone,student_class,gender,address,hometown,dob,user], (err, result)=> {
-        if (err) console.log(err)
-        return res.send(result) 
-    })
-}
 
 
-const GetUsersView = (req, res, next) => {
-    con.query(`SELECT * FROM students_profile CROSS JOIN users`, (err, results, fields) => {
-        if (err) throw err
-        console.log(results)
-        res.send(results)
-    }) 
-}
+
+
 
 const GetFilteredUsersView = (req, res, next) => {
     const { role } = req.body 
@@ -92,42 +69,15 @@ const GetFilteredUsersView = (req, res, next) => {
     }) 
 }
 
-const GetStudentsView = (req, res, next) => {
-    con.query(`SELECT first_name, last_name, grade, date_of_birth FROM students`, (err, results, fields) => {
-        if (err) throw err
-        res.send(results)
-    }) 
-}
 
 
-const UpdateView = (req, res) => {
-    const id = req.params.id;
-    const data = {
-      name: req.body.name,
-      age: req.body.age
-    };
-  
-    let sql = "UPDATE users SET ? WHERE id = ?";
-    let query = connection.query(sql, [data, id], (err, results) => {
-      if(err) throw err;
-      res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
-    });
-}
 
-const DeleteView = (req, res) => {
-    con.query("DELETE FROM users WHERE id = ?", [req.params.id], (err, results) => {
-        res.send("Deleted successfully")
-        console.log(results)
-    })
-}
+
+
+
 
 module.exports = {
     registerView,
     loginView,
-    GetUsersView,
-    GetStudentsView,
-    GetFilteredUsersView,
-    UpdateView,
-    DeleteView,
-    AddStudentView
+    GetFilteredUsersView
 }
