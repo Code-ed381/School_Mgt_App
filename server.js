@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require("express");
 const con = require("./config/database");
 const cookieParser = require("cookie-parser");
@@ -9,7 +10,11 @@ const { logger } = require('./middleware/logEvents');
 const errorHandler = require('./middleware/errorHandler');
 const verifyJWT = require('./middleware/verifyJWT')
 const credentials = require('./middleware/credentials')
-require('dotenv').config()
+const mongoose = require('mongoose')
+const connectDB = require('./config/database')
+
+// Connect to MongoDB
+connectDB()
 
 // Custom middleware logger
 app.use(logger)
@@ -34,14 +39,14 @@ app.use(express.json())
 app.use(bodyParser.json())
   
 
-con.connect(function(err) {
-  if (!err) { 
-    console.log("Database Connected!")
-  }
-  else {
-    throw err;  
-  }
-});
+// con.connect(function(err) {
+//   if (!err) { 
+//     console.log("Database Connected!")
+//   }
+//   else {
+//     throw err;  
+//   }
+// });
 
 //Routes
 app.use('/', require('./routes/routes'));
@@ -56,6 +61,11 @@ app.use('/students', require('./routes/api/students'));
 //Logs errors
 app.use(errorHandler)
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server listening on ${process.env.PORT}`);
-}); 
+
+
+
+
+mongoose.connection.once('open', ()=> {
+  console.log('connected to MongoDB')
+  app.listen(process.env.PORT, () => {console.log(`Server running on port ${process.env.PORT}`);}); 
+})

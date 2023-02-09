@@ -61,3 +61,11 @@
 20230209	08:06:05	a2efb072-15b1-463e-889f-7fe288a39207	POST	undefined	/register
 20230209	08:06:15	d507e24f-9617-405d-940d-fea3a6d4d78b	POST	undefined	/register
 20230209	08:06:24	1099509b-8fc0-4a80-8152-905f2f7f1247	POST	undefined	/register
+20230209	08:33:02	1d377b5d-2384-4f2e-9eed-2ead9ad34e35	POST	undefined	/auth
+20230209	08:33:17	8ad41f61-d97f-4463-9225-dad5cf87621d	GET	undefined	/students
+20230209	08:33:28	77a40d2f-2ca1-4357-aff1-1aeef063b892	POST	undefined	/students
+20230209	08:34:37	c8076d36-caf0-43a8-a43d-8dab188e9ce9	GET	undefined	/logout
+20230209	08:34:50	49d3e90e-493f-4114-afcc-cad90253ce7f	POST	undefined	/auth
+20230209	08:35:02	d01ab5ea-9985-4477-8990-627d71c2fffd	GET	undefined	/students
+20230209	08:35:08	472f0de5-5ca1-4563-a9b3-2b5957dbcf48	POST	undefined	/students
+20230209	09:55:17	10fa7ed6-783b-4501-9c5d-bce1f40258b5	POST	undefined	/register

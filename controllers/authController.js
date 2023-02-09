@@ -5,10 +5,8 @@ const usersDB = {
 
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-require('dotenv').config()
 const fsPromises = require('fs').promises;
 const path = require('path');
-const { NONE } = require('sequelize')
 
 const handleLogin = async (req, res) => {
     const { user, pwd } = req.body;
@@ -20,9 +18,16 @@ const handleLogin = async (req, res) => {
     //Evaluate password
     const match = await bcrypt.compare( pwd, foundUser.password);
     if (match) {
+        const roles = Object.values(foundUser.roles);
+
         //Create JWT
         const accessToken = jwt.sign( 
-            { "username": foundUser.username },
+            { 
+                "UserInfo": {
+                    "username": foundUser.username,
+                    "roles": roles 
+                }
+            },
             process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: '30s' }
         );
