@@ -1,1 +1,35 @@
-[]
+[
+    {
+        "username": "Edwin",
+        "roles": {
+            "User": 2001,
+            "Editor": 1984,
+            "Admin": 5150
+        },
+        "password": "$2b$10$N.kmfj/4HOjmR37L2s2YVORSXau7p8e8GkrBTfi6cjDXgxC6O9LZ2",
+        "refreshToken": ""
+    },
+    {
+        "username": "Dave",
+        "roles": {
+            "User": 2001    
+        },
+        "password": "$2b$10$OotbOkfoWOqh2/3YxZbR3eg/g09rWaOCTMOJFqAE01NUwXHtkCZPW"
+    },
+    {
+        "username": "Smith",
+        "roles": {
+            "User": 2001,
+            "Admin": 5150
+        },
+        "password": "$2b$10$SZP/ViX8xEs/5JsxIn4jzeOo.oxU3zd7hxIuR3DI4jblbufthXuqa"
+    },
+    {
+        "username": "Johnny",
+        "roles": {
+            "User": 2001,
+            "Editor": 1984
+        },
+        "password": "$2b$10$cERAI.PkeOFz5ksyPnINWeVsvbaxtdVByN2vmgH.r/XkBg4lTJ7Gi"
+    }
+]

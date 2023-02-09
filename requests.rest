@@ -14,8 +14,8 @@ content-type: application/json;
 
 
 ###
-GET http://localhost:3001/authenticate
+GET http://localhost:3001/logout
 
 
 ###
-DELETE  http://localhost:3001/users/1
+GET http://localhost:3001/students
