@@ -9,28 +9,28 @@ const {
 } = require('../controllers/controller');
 
 //Register new user 
-router.post('/register', registerView)  
+// router.post('/register', registerView)  
 
 // router.post('/users', AddStudentView); 
 
 //Login user
-router.post('/login', loginView)
+// router.post('/login', loginView)
 
-router.get('/', validateToken, (req, res, next) => {
-    res.send({ message: 'authorized'}) 
-})
+// router.get('/', validateToken, (req, res, next) => {
+//     res.send({ message: 'authorized'}) 
+// })
 
-router.get('/authenticate', validateToken, (req, res, next) => {
-    res.send({ message: 'authenticated'})
-})
+// router.get('/authenticate', validateToken, (req, res, next) => {
+//     res.send({ message: 'authenticated'})
+// })
 
 //Read
-router.post('/login/password', isAuth, (req, res, next) =>{
-    // const accessToken = createTokens(user)
-    // res.cookie('access-token', accessToken, {
-    //     maxAge: 60*60*24*30*1000,
-    // })
-});
+// router.post('/login/password', isAuth, (req, res, next) =>{
+//     // const accessToken = createTokens(user)
+//     // res.cookie('access-token', accessToken, {
+//     //     maxAge: 60*60*24*30*1000,
+//     // })
+// });
 
 // router.put('/update/:id', UpdateView);
 
@@ -58,10 +58,10 @@ router.get('/login-failure', (req, res, next)=> {
     res.json({message: 'Invalid username or password'})
 })
 
-router.get('/logout', (req, res, next)=> {
-    res.clearCookie('access-token')
-    res.end()
-})
+// router.get('/logout', (req, res, next)=> {
+//     res.clearCookie('access-token')
+//     res.end()
+// })
 
 // router.get('/userAlreadyExists', (req, res, next)=> {
 //     res.json({message: "User already exists"})

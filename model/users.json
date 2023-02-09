@@ -1,1 +1,36 @@
-[]
+[
+    {
+        "username": "Smith",
+        "roles": {
+            "User": 2001,
+            "Admin": 5150
+        },
+        "password": "$2b$10$SZP/ViX8xEs/5JsxIn4jzeOo.oxU3zd7hxIuR3DI4jblbufthXuqa"
+    },
+    {
+        "username": "Johnny",
+        "roles": {
+            "User": 2001,
+            "Editor": 1984
+        },
+        "password": "$2b$10$cERAI.PkeOFz5ksyPnINWeVsvbaxtdVByN2vmgH.r/XkBg4lTJ7Gi"
+    },
+    {
+        "username": "Edwin",
+        "roles": {
+            "User": 2001,
+            "Editor": 1984,
+            "Admin": 5150
+        },
+        "password": "$2b$10$N.kmfj/4HOjmR37L2s2YVORSXau7p8e8GkrBTfi6cjDXgxC6O9LZ2",
+        "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVkd2luIiwiaWF0IjoxNjc1OTMxNTgyLCJleHAiOjE2NzYwMTc5ODJ9.DgkictxBx2yZaF4_mPghoIEusLgeH1N28TmBUbVeAQk"
+    },
+    {
+        "username": "Dave",
+        "roles": {
+            "User": 2001
+        },
+        "password": "$2b$10$OotbOkfoWOqh2/3YxZbR3eg/g09rWaOCTMOJFqAE01NUwXHtkCZPW",
+        "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkRhdmUiLCJpYXQiOjE2NzU5MzE2OTAsImV4cCI6MTY3NjAxODA5MH0.K9DghixnvvXNGnm0_Lh_UDPIODm1XD7iQjILT7nLlmE"
+    }
+]
