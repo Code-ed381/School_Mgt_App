@@ -1,11 +1,66 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 // import $ from "jquery";
 
-function SignUp() {
+const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+const SignUp = ()=> {
+    const userRef = useRef();
+    const errRef = useRef();
+
     const [username, setUsername] = useState("");
+    const [validName, setValidName] = useState(false);
+    const [userFocus, setUserFocus] = useState(false);
+
     const [email, setEmail] = useState("");
+    const [validEmail, setValidEmail] = useState(false);
+    const [emailFocus, setEmailFocus] = useState(false);
+
+    const [pwd, setPwd] = useState("");
+    const [validPwd, setValidPwd] = useState(false);
+    const [pwdFocus, setPwdFocus] = useState(false);
+
+    const [matchPwd, setMatchPwd] = useState("");
+    const [validMatch, setValidMatch] = useState(false);
+    const [matchFocus, setMatchFocus] = useState(false);
+
+    const [errMsg, setErrMsg] = useState(false);
+    const [success, setSuccess] = useState(false);
+
+    useEffect(() => {
+        userRef.current.focus()
+    }, [])
+
+    useEffect(() => {
+        const result = USER_REGEX.test(username);
+        console.log(result);
+        console.log(username);
+        setValidName(result)
+    }, [username])
+
+    useEffect(() => {
+        const result = EMAIL_REGEX.test(email);
+        console.log(result);
+        console.log(email);
+        setValidEmail(result)
+    }, [email])
+
+    useEffect(() => {
+        const result = PWD_REGEX.test(pwd);
+        console.log(result);
+        console.log(pwd);
+        setValidPwd(result);
+        const match = pwd === matchPwd;
+        setValidMatch(match);
+    }, [pwd, matchPwd])
+
+    useEffect(() => {
+        setErrMsg('')
+    }, [ username, pwd, matchPwd])
+
     const [role, setRole] = useState(0);
     const [password, setPassword] = useState("");
     const [re_password, setRe_password] = useState("");
@@ -20,6 +75,7 @@ function SignUp() {
     // const handleChange = (e) => {
     //     setTask(e.target.value)
     // }
+
 
     const navigate = useNavigate() 
       
@@ -87,59 +143,90 @@ function SignUp() {
                 <div class="login-register" style={{ backgroundImage: 'url(../assets/images/background/login-register.jpg)'}}>
                     <div class="login-box card">
                         <div class="card-body">
-                            <form class="form-horizontal form-material" id="loginform">
-                                <p className="alert alert-danger">{message}</p>
+                            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                                 <h3 class="text-center m-b-20">Sign Up</h3>
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <input 
-                                            class="form-control" 
+                                            class={validName ? "form-control is-valid" : "form-control" && !username ? "form-control": "form-control is-invalid"}
                                             type="text" 
                                             required
-                                            placeholder="Name" 
+                                            ref={userRef}
+                                            placeholder="Name"
+                                            autoComplete="off" 
                                             onChange={(e) => { 
                                                 setUsername(e.target.value)
                                             }}
+                                            aria-invalid = {validName ? "false" : "true"}
+                                            aria-describedby = "uidnote"
+                                            onFocus = {()=> setUserFocus(true)}
+                                            onBlur = {()=> setUserFocus(false)}
                                         />
+                                        <p id="uidnote" className={userFocus && username && !validName ? "instructions": "offscreen"}>
+                                            <i class="ti-info-alt" style={{margin: '5px'}}></i>
+                                             4 to 24 characters.<br/>
+                                            Must begin with a letter.<br/>
+                                            Letters, numbers, underscores, hyphens allowed.
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="form-group ">
                                     <div class="col-xs-12">
                                         <input 
-                                            class="form-control" 
+                                            class={validEmail ? "form-control is-valid" : "form-control" && !email ? "form-control": "form-control is-invalid"}
                                             type="text" 
                                             required
-                                            placeholder="Email"
+                                            placeholder = "Email"
+                                            autoComplete = "off" 
                                             onChange={(e) => { 
                                                 setEmail(e.target.value)
                                             }}
+                                            aria-invalid = {validEmail ? "false" : "true"}
+                                            aria-describedby = "emailnote"
+                                            onFocus = {()=> setEmailFocus(true)}
+                                            onBlur = {()=> setEmailFocus(false)}
                                         />
                                     </div>
                                 </div>
                                 <div class="form-group ">
                                     <div class="col-xs-12">
                                         <input 
-                                            class="form-control" 
+                                            class={validPwd ? "form-control is-valid" : "form-control" && !pwd ? "form-control": "form-control is-invalid"}
                                             type="password" 
                                             required 
                                             placeholder="Password"
                                             onChange={(e) => { 
-                                                setPassword(e.target.value)
+                                                setPwd(e.target.value)
                                             }}
+                                            onFocus = {()=> setPwdFocus(true)}
+                                            onBlur = {()=> setPwdFocus(false)}
                                         />
+                                        <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions": "offscreen"}>
+                                            <i class="ti-info-alt" style={{margin: '5px'}}></i>
+                                             8 to 24 characters.<br/>
+                                            Must include uppercase and lowercase letters,<br/>
+                                            a number and a special character.<br/>
+                                            Allowed special characters: ! @ # $ %
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-xs-12">
-                                        <input 
-                                            class="form-control" 
+                                    <input 
+                                            class={validMatch && matchPwd ? "form-control is-valid" : "form-control" && validMatch || !matchPwd ? "form-control": "form-control is-invalid"}
                                             type="password" 
                                             required
                                             placeholder="Confirm Password"
                                             onChange={(e) => { 
-                                                setRe_password(e.target.value)
+                                                setMatchPwd(e.target.value)
                                             }}
+                                            onFocus = {()=> setMatchFocus(true)}
+                                            onBlur = {()=> setMatchFocus(false)}
                                         />
+                                        <p id="pwdnote" className={matchFocus && !validMatch ? "instructions": "offscreen"}>
+                                            <i class="ti-info-alt" style={{margin: '5px'}}></i>
+                                             Must match the password input field
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -170,7 +257,6 @@ function SignUp() {
                                         Already have an account? <Link to="/login" class="text-info m-l-5"><b>Sign In</b></Link>
                                     </div>
                                 </div>
-                            </form>
                         </div>
                     </div>
                 </div>

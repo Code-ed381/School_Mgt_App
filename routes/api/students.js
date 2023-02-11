@@ -15,4 +15,4 @@ router.route('/:id')
     .get(studentsController.getStudent)
 
 
-module.exports = router;
+module.exports = router; 

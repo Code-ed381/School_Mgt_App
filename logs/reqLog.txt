@@ -115,3 +115,14 @@
 20230210	00:35:39	74e641a6-fac2-4813-8e7c-e50fbf9f1005	POST	undefined	/auth
 20230210	00:35:55	26905558-77ce-4dee-a898-e817e617802f	GET	undefined	/students
 20230210	00:36:14	8319a932-fece-4b65-b243-9d4f0866a66d	POST	undefined	/students
+20230210	12:51:09	1ea3bc1d-4b95-4623-8e83-d627ae7efbd0	GET	undefined	/students
+20230210	12:51:20	6f462f84-85d1-4483-8603-38679ad8d9fc	POST	undefined	/auth
+20230210	12:51:23	122b82ff-3617-492c-b919-d7a05c9e6f1b	GET	undefined	/students
+20230210	12:51:41	1404156d-99a2-4b58-ab20-8272c082e854	GET	undefined	/students
+20230210	12:52:36	410f4b37-5a9b-4fcb-9080-c0a9aae3047d	DELETE	undefined	/students
+20230210	12:53:05	b4731b06-8271-4c3c-9882-02769683ff78	DELETE	undefined	/students
+20230210	12:53:28	c78c80e1-1dfc-40af-ac66-b16015dd0c04	DELETE	undefined	/students
+20230210	12:54:16	fb93dee1-bea6-48f8-a768-bbb9e7cc4c4c	GET	undefined	/students
+20230210	12:55:00	f2f385b0-da91-4815-b1fc-1c0b9585f7aa	DELETE	undefined	/students
+20230210	13:00:56	dbf06022-6301-4464-9b11-69800f6a29d4	DELETE	undefined	/students
+20230210	13:01:01	db0e727c-2368-4185-93aa-0432afc637ab	GET	undefined	/students

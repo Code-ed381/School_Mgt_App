@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, createContext, useContext } from "react";
-import SignUp from './components/signup';
+import SignUp from './components/register';
 import Recover from './components/forgot_pwd';
 import Login from "./components/login";
 import Students from "./components/students";
