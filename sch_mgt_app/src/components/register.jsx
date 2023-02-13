@@ -11,7 +11,7 @@ const SignUp = ()=> {
     const userRef = useRef();
     const errRef = useRef();
 
-    const [username, setUsername] = useState("");
+    const [user, setUser] = useState("");
     const [validName, setValidName] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
 
@@ -35,11 +35,11 @@ const SignUp = ()=> {
     }, [])
 
     useEffect(() => {
-        const result = USER_REGEX.test(username);
+        const result = USER_REGEX.test(user);
         console.log(result);
-        console.log(username);
+        console.log(user);
         setValidName(result)
-    }, [username])
+    }, [user])
 
     useEffect(() => {
         const result = EMAIL_REGEX.test(email);
@@ -59,12 +59,12 @@ const SignUp = ()=> {
 
     useEffect(() => {
         setErrMsg('')
-    }, [ username, pwd, matchPwd])
+    }, [ user, pwd, matchPwd])
 
-    const [role, setRole] = useState(0);
-    const [password, setPassword] = useState("");
-    const [re_password, setRe_password] = useState("");
-    const [message, setMessage] = useState('')
+    // const [role, setRole] = useState(0);
+    // const [password, setPassword] = useState("");
+    // const [re_password, setRe_password] = useState("");
+    // const [message, setMessage] = useState('')
 
     // const logout = () => {
     //     Axios.post('http://localhost:3001/logout', {}).then((response) => {
@@ -79,49 +79,43 @@ const SignUp = ()=> {
 
     const navigate = useNavigate() 
       
-    const handleClick = async (e)=> {
+    const handleSubmit = async (e)=> {
         e.preventDefault()
-        if (re_password === password) {
-            try {
-                await Axios.post('http://localhost:3001/register', {
-                    username: username,
-                    email: email,
-                    role: role,
-                    password: password,
-                })
-                .then((res)=> {
-                    console.log(res)
-                    try {
-                        if(res.data.message === 'logged_in') {
-                            window.localStorage.setItem('user', res.data.message)
-                            navigate('/home')
-                            setRole(res.data.message)
-                        }
-                        else {
-                            setMessage(res.data.message)
-                        }
-                    }
-                    catch (err) {
-                        console.log(err)
-                    }
-                })  
-                
-                try {
-                    const res = await Axios.get('http://localhost:3001/userAlreadyExists')
-                    setMessage(res.data.message)
-                
-                }
-                catch(err) {
-                    console.log(err)
-                }
-            }
-            catch(err) {
-                console.log(err)
-            }
-        } 
-        else {
-            setMessage("Passwords do not match")
+
+        //Error messages for various errors
+        const v1 = USER_REGEX.test(user);
+        const v2 = PWD_REGEX.test(pwd);
+
+        if (!v1 || !v2) {
+            setErrMsg("Invalid Entry");
+            return;
         }
+        try {
+            const res = await Axios.post('http://localhost:3001/register',
+                JSON.stringify({ user, email, pwd }),
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
+                }
+            );
+            console.log(res.data);
+            console.log(res.accessToken);
+            console.log(JSON.stringify(res));
+            setSuccess(true);
+
+        }
+        catch (err) {
+            if (!err?.res) {
+                setErrMsg('No server response');
+            }
+            else if ( err.res?.status === 409) {
+                setErrMsg('Username already exists')
+            }
+            else {
+                setErrMsg('Registration Failed')
+            }
+            errRef.current.focus(); 
+        } 
     }
     
     const logout = async (e)=>{
@@ -148,21 +142,21 @@ const SignUp = ()=> {
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <input 
-                                            class={validName ? "form-control is-valid" : "form-control" && !username ? "form-control": "form-control is-invalid"}
+                                            class={validName ? "form-control is-valid" : "form-control" && !user ? "form-control": "form-control is-invalid"}
                                             type="text" 
                                             required
                                             ref={userRef}
                                             placeholder="Name"
                                             autoComplete="off" 
                                             onChange={(e) => { 
-                                                setUsername(e.target.value)
+                                                setUser(e.target.value)
                                             }}
                                             aria-invalid = {validName ? "false" : "true"}
                                             aria-describedby = "uidnote"
                                             onFocus = {()=> setUserFocus(true)}
                                             onBlur = {()=> setUserFocus(false)}
                                         />
-                                        <p id="uidnote" className={userFocus && username && !validName ? "instructions": "offscreen"}>
+                                        <p id="uidnote" className={userFocus && user && !validName ? "instructions": "offscreen"}>
                                             <i class="ti-info-alt" style={{margin: '5px'}}></i>
                                              4 to 24 characters.<br/>
                                             Must begin with a letter.<br/>
@@ -213,7 +207,7 @@ const SignUp = ()=> {
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                     <input 
-                                            class={validMatch && matchPwd ? "form-control is-valid" : "form-control" && validMatch || !matchPwd ? "form-control": "form-control is-invalid"}
+                                            class={validMatch && matchPwd ? "form-control is-valid" : "form-control" && (validMatch || !matchPwd) ? "form-control": "form-control is-invalid"}
                                             type="password" 
                                             required
                                             placeholder="Confirm Password"
@@ -237,7 +231,7 @@ const SignUp = ()=> {
                                                 class="form-check-input" 
                                                 id="customCheck1"
                                             />
-                                            <label class="form-check-label" for="customCheck1">I agree to all <a href="javascript:void(0)">Terms</a></label> 
+                                            <label class="form-check-label" for="customCheck1">I agree to all <a href="#">Terms</a></label> 
                                         </div> 
                                     </div>
                                 </div>
@@ -246,7 +240,7 @@ const SignUp = ()=> {
                                         <button 
                                             class="btn btn-info btn-lg w-100 btn-rounded text-uppercase waves-effect waves-light text-white" 
                                             type="submit"
-                                            onClick={handleClick}
+                                            onClick={handleSubmit}
                                         >
                                             Sign Up
                                         </button>
