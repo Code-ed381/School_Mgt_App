@@ -1,1 +1,10 @@
 20230209	08:04:02	521797c4-593a-4a85-89cf-d91daa28cb89	ReferenceError: origin is not defined
+20230210	12:53:28	36a8ad57-b97e-489e-8b26-1da39d791f84	SyntaxError: Unexpected token e in JSON at position 15
+20230213	10:34:53	6a927457-746e-4e1f-851b-54b45328cb49	Error: Not allowed by Cors
+20230213	21:35:46	8bd3c0ab-0838-4003-a46f-829c4b444509	Error: Not allowed by Cors
+20230213	21:43:48	29618a5c-3c39-4a40-a27d-901a554ad4f1	Error: Not allowed by Cors
+20230213	21:44:20	12e44301-1a32-4b6b-ae20-95547938dd70	Error: Not allowed by Cors
+20230213	21:45:50	41fa0676-fa18-42cb-b69a-b3968480c758	Error: Not allowed by Cors
+20230213	21:48:49	af9064fb-55d2-48c0-929c-6be909993077	Error: Not allowed by Cors
+20230213	21:50:38	a068c2c1-88a9-4358-8235-102386443691	Error: Not allowed by Cors
+20230213	21:53:34	649a6f37-6608-4439-82c8-6d29805d3f8f	Error: Not allowed by Cors

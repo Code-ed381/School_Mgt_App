@@ -14,6 +14,10 @@ const userSchema = new Schema({
         Editor: Number,
         Admin: Number
     },
+    email: {
+        type: String,
+        required: true
+    },
     password:{
         type: String,
         required: true

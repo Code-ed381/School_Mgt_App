@@ -48,8 +48,10 @@ app.use(bodyParser.json())
 //   }
 // });
 
+
+
 //Routes
-app.use('/', require('./routes/routes'));
+// app.use('/', require('./routes'));
 app.use('/register', require('./routes/register'));
 app.use('/auth', require('./routes/auth'));
 app.use('/refresh', require('./routes/refresh'));
@@ -60,10 +62,6 @@ app.use('/students', require('./routes/api/students'));
 
 //Logs errors
 app.use(errorHandler)
-
-
-
-
 
 mongoose.connection.once('open', ()=> {
   console.log('connected to MongoDB')
