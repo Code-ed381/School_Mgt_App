@@ -1,54 +1,67 @@
-import { useState } from "react";
-import Axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
-import Cookie from "js-cookie"
+import { useState, useRef, useEffect } from "react";
+import useAuth from '../hooks/useAuth'
+import axios from "../api/axios";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+
+const LOGIN_URL = '/auth';
 
 const Login = ()=> {
+    const { setAuth } = useAuth();
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
+
+
+    const userRef = useRef();
+    const errRef = useRef();
+
     const [user, setUser] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
+    const [pwd, setPwd] = useState('');
+    const [errMsg, setErrMsg] = useState('');
 
+    useEffect(()=> {
+        userRef.current.focus();
+    }, [])
 
-    //Get the values from the database using ajax
-    // const navigate = useNavigate() 
+    useEffect(()=> {
+       setErrMsg('');
+    }, [user, pwd])
 
-    const logout = async (e)=>  {
+    const handleSubmit = async (e)=> {
         e.preventDefault()
 
-        Axios.get('http://localhost:3001/logout')
-        .then((res)=>{
-            setMessage(res.data.message) 
-            window.location = '/'
-            setUser(null) 
-        })
-    }
-
-    const handleClick = async (e)=> {
-        e.preventDefault()
-
-        Axios.post('http://localhost:3001/login', {
-            username: username,
-            password: password
-        })
-        .then((res)=> {
-            // window.location = 'home'
-            setMessage(res.data.message)
-            alert(Cookie.get('access-token'))
-
-            
-
-            localStorage.setItem("user", res.data.message)
-            // try {
-            //     if ( res.data.message === 'logged_in') {
-            //     }
-            //     else {
-            //     } 
-            // }
-            // catch (err) {
-            //     console.log(err)
-            // }
-        })       
+        try {
+            const res = await axios.post(LOGIN_URL,
+                JSON.stringify({ user, pwd }),
+                {
+                    headers: { 'Content-Type': 'application/json'},
+                    withCredentials: true
+                }
+            );
+            console.log(JSON.stringify(res))
+            const accessToken = res?.data?.accessToken;
+            const roles = res?.data?.roles;
+            setAuth({ user, pwd, roles, accessToken })
+            setUser('')
+            setPwd('')
+            navigate(from, { replace: true })
+        }
+        catch (err){
+            if (!err?.res) {
+                setErrMsg('No server response')
+            }
+            else if (err.res?.status === 400) {
+                setErrMsg('Missing Username or Password')
+            }
+            else if (err.res?.status === 401){
+                setErrMsg('Unauthorized');
+            }
+            else {
+                setErrMsg('Login Failed')
+            }
+            // errRef.current.focus();
+        }
     }
 
     return (
@@ -60,20 +73,22 @@ const Login = ()=> {
                 <div class="login-register" style={{backgroundImage: 'url(../assets/images/background/login-register.jpg)' }}>
                     <div class="login-box card">
                         <div class="card-body">
-                            <form class="form-horizontal form-material" id="loginform" action="index.html">
+                            <form class="" id="loginform" onSubmit={handleSubmit}>
+                            <div className={errMsg ? "alert alert-danger" : "offscreen"} ref={errRef}  aria-live="assertive">{errMsg}</div>
                                 <h3 class="text-center m-b-20">Sign In</h3>
                                 <div class="form-group ">
-                                    <h3>{user}</h3>
                                     <div class="col-xs-12">
                                         <input 
                                             class="form-control" 
                                             name = "username"
                                             type="text" 
+                                            ref={userRef}
                                             required 
                                             placeholder="Username or email"
                                             onChange={(e) => { 
-                                                setUsername(e.target.value)
+                                                setUser(e.target.value)
                                             }}
+                                            value={user}
                                         /> 
                                     </div>
                                 </div>
@@ -85,8 +100,9 @@ const Login = ()=> {
                                             required 
                                             placeholder="Password"
                                             onChange={(e) => { 
-                                                setPassword(e.target.value)
+                                                setPwd(e.target.value)
                                             }}
+                                            value={pwd}
                                         /> 
                                     </div>
                                 </div>
@@ -109,7 +125,7 @@ const Login = ()=> {
                                 </div>
                                 <div class="form-group text-center">
                                     <div class="col-xs-12 p-b-20">
-                                        <button class="btn w-100 btn-lg btn-info btn-rounded text-white" type="submit" onClick={handleClick}>Log In</button>
+                                        <button class="btn w-100 btn-lg btn-info btn-rounded text-white" type="submit">Log In</button>
                                     </div>
                                 </div>
                                 <div class="row">

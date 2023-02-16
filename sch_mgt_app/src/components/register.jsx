@@ -1,11 +1,14 @@
 import { useState, useRef, useEffect } from "react";
-import Axios from "axios";
+import axios from "../api/axios";
 import { useNavigate, Link } from "react-router-dom";
+
+
 // import $ from "jquery";
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+const REGISTER_URL = '/register';
 
 const SignUp = ()=> {
     const userRef = useRef();
@@ -91,7 +94,7 @@ const SignUp = ()=> {
             return;
         }
         try {
-            const res = await Axios.post('http://localhost:3001/register',
+            const res = await axios.post(REGISTER_URL,
                 JSON.stringify({ user, email, pwd }),
                 {
                     headers: { 'Content-Type': 'application/json' },
@@ -116,13 +119,14 @@ const SignUp = ()=> {
             }
             errRef.current.focus(); 
         } 
+
     }
     
     const logout = async (e)=>{
         e.preventDefault()
         
         try {
-            await Axios.get('http://localhost:3001/logout')
+            await axios.get('http://localhost:3001/logout')
         }
         catch(err) {
             console.log(err)
@@ -137,7 +141,9 @@ const SignUp = ()=> {
                 <div class="login-register" style={{ backgroundImage: 'url(../assets/images/background/login-register.jpg)'}}>
                     <div class="login-box card">
                         <div class="card-body">
-                            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                        <div className={errMsg ? "alert alert-danger" : "offscreen"} ref={errRef}  aria-live="assertive">{errMsg}</div>
+                            {/* <p >{errMsg}</p> */}
+                            <form onSubmit={handleSubmit}>
                                 <h3 class="text-center m-b-20">Sign Up</h3>
                                 <div class="form-group">
                                     <div class="col-xs-12">
@@ -240,7 +246,6 @@ const SignUp = ()=> {
                                         <button 
                                             class="btn btn-info btn-lg w-100 btn-rounded text-uppercase waves-effect waves-light text-white" 
                                             type="submit"
-                                            onClick={handleSubmit}
                                         >
                                             Sign Up
                                         </button>
@@ -251,6 +256,7 @@ const SignUp = ()=> {
                                         Already have an account? <Link to="/login" class="text-info m-l-5"><b>Sign In</b></Link>
                                     </div>
                                 </div>
+                            </form>
                         </div>
                     </div>
                 </div>
