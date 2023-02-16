@@ -16,7 +16,7 @@ const Profile = () => {
                         <h4 class="text-themecolor">Profile</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-end">
-                        <div class="d-flex justify-content-end align-items-center">
+                        <div class="d-flex justify-content-end align-items-center"> 
                             <ol class="breadcrumb justify-content-end">
                                 <li class="breadcrumb-item"><Link to="/">Home</Link></li>
                                 <li class="breadcrumb-item active">Profile</li>

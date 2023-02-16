@@ -1,9 +1,39 @@
 import { useEffect, useState } from "react";
-import Axios from "axios";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 
-const Admin = () => {
+const Users = () => {
+    const [users, setUsers] = useState([]);
+    const axiosPrivate = useAxiosPrivate()
+    const { auth } = useAuth()
+
+    useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+
+        const getUsers = async ()=> {
+            try {
+                const res = await axiosPrivate.get('/users', {
+                    signal: controller.signal,
+                });
+                console.log(res.data);
+                console.log(auth)
+                isMounted && setUsers(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        getUsers();
+
+        return ()=> {
+            isMounted = false;
+            controller.abort();
+        }
+    }, []) 
+
+
     return(
         <>
         {/* <!-- ============================================================== -->
@@ -15,13 +45,13 @@ const Admin = () => {
           <!-- ============================================================== --> */}
             <div class="row page-titles">
                 <div class="col-md-5 align-self-center">
-                    <h4 class="text-themecolor">Administrator</h4>
+                    <h4 class="text-themecolor">Students</h4>
                 </div>
                 <div class="col-md-7 align-self-center text-end">
                     <div class="d-flex justify-content-end align-items-center">
                         <ol class="breadcrumb justify-content-end">
                             <li class="breadcrumb-item"><Link to="/home">Home</Link></li>
-                            <li class="breadcrumb-item active">Admin</li>
+                            <li class="breadcrumb-item active">Users</li>
                         </ol>
                         {/* <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white"><i class="fa fa-plus-circle"></i> Create New</button> */}
                     </div>
@@ -49,8 +79,15 @@ const Admin = () => {
                   <div class="col-lg-12">
                       <div class="card">
                           <div class="card-body">
-                              <h4 class="card-title">Admin</h4>
-
+                            <h4 class="card-title">Users</h4>
+                            {
+                                users?.length
+                                    ? (
+                                        <ul>
+                                            {users.map((user, i)=> <li key={i}>{user?.username}</li>)}
+                                        </ul>
+                                    ) : <p>No users to display</p>
+                            }
                           </div>
                       </div>
                   </div>
@@ -130,4 +167,4 @@ const Admin = () => {
 }
 
 
-export default Admin;
+export default Users;

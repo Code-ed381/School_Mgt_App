@@ -341,10 +341,9 @@ function Home() {
                                 </ul>
                             </li>
                             <li className="nav-small-cap">--- ADMIN</li>
-                            <li> <a className="waves-effect waves-dark" href="index.html"><i className="icon-user"></i><span className="hide-menu">All Users</span></a>
-                            </li>
-                            <li> <a className="waves-effect waves-dark" href="index.html"><i className="icon-people"></i><span className="hide-menu">All students</span></a>
-                            </li>
+                            <li> <Link className="waves-effect waves-dark" to="admin"><i className="icon-user"></i><span className="hide-menu">Admin</span></Link></li>
+                            <li> <Link className="waves-effect waves-dark" to="students"><i className="icon-people"></i><span className="hide-menu">Students</span></Link></li>
+                            <li> <Link className="waves-effect waves-dark" to="users"><i className="icon-people"></i><span className="hide-menu">Users</span></Link></li>
                                   
                             <li> <a className="waves-effect waves-dark" href="#" onClick={logout} aria-expanded="false"><i className=" icon-logout text-danger"></i><span className="hide-menu">Log Out</span></a></li>
                         </ul>
@@ -361,8 +360,6 @@ function Home() {
             <!-- ============================================================== --> */}
             <div class="page-wrapper">
                 <Outlet/>
-
-
             </div>
         </div>
     </>

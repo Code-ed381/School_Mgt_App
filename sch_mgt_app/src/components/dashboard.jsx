@@ -5,80 +5,6 @@ import swal from 'sweetalert';
 const qs = require('qs');
 
 
-// const UpdateRow = ({ row, updateRow }) => {
-//     const [updatedData, setUpdatedData] = useState({
-//       id: row.id,
-//       first_name: row.first_name,
-//       last_name: row.last_name,
-//       username: row.username,
-//       dob: row.dob,
-//       phone: row.phone,
-//       class: row.class,
-//       address: row.address,
-//       town_of_birth: row.hometown,
-//       email: row.email
-//     });
-  
-//     useEffect(() => {
-//       setUpdatedData({
-//         id: row.id,
-//         first_name: row.first_name,
-//         last_name: row.last_name,
-//         username: row.username,
-//         date_of_birth: row.date_of_birth,
-//         phone: row.phone,
-//         grade_id: row.grade_id,
-//         address: row.address,
-//         town_of_birth: row.town_of_birth,
-//         role: row.role,
-//         email: row.email
-//       });
-//     }, [row]);
-  
-//     const handleChange = (event) => {
-//       setUpdatedData({
-//         ...updatedData,
-//         [event.target.name]: event.target.value
-//       });
-//     };
-  
-//     const handleSubmit = (event) => {
-//       event.preventDefault();
-//       updateRow(updatedData);
-//     };
-    
-//     return (
-//         <div class="col-md-4">
-//             <div id="responsive-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style={{display: "none"}}>
-//                 <div class="modal-dialog">
-//                     <div class="modal-content">
-//                         <div class="modal-header">
-//                             <h4 class="modal-title">Edit Profile</h4>
-//                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-//                         </div>
-//                         <div class="modal-body">
-//                             <form>
-//                                 <div class="form-group">
-//                                     <label for="recipient-name" class="form-label">First name</label>
-//                                     <input type="text" class="form-control" id="recipient-name" value={row.first_name}/>
-//                                 </div>
-//                                 <div class="form-group">
-//                                     <label for="message-text" class="form-label">Message:</label>
-//                                     <textarea class="form-control" id="message-text"></textarea>
-//                                 </div>
-//                             </form>
-//                         </div>
-//                         <div class="modal-footer">
-//                             <button type="button" class="btn btn-default waves-effect" data-bs-dismiss="modal">Close</button>
-//                             <button type="button" class="btn btn-danger waves-effect waves-light text-white">Save changes</button>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     )
-// }
-
 const Dashboard = ()=> {
     const [rows, setRows] = useState([]);
     const [firstName, setFirstName] = useState('');
@@ -92,6 +18,7 @@ const Dashboard = ()=> {
     const [user, setUser] = useState(16);
 
 
+
     useEffect(() => {
         Axios.get('http://localhost:3001/users')
         .then((res)=>{
@@ -99,12 +26,7 @@ const Dashboard = ()=> {
         })
     }, []) 
 
-    // const handleChange = (e)=> {
-    //     setData((prev)=>
-        
-    //     ({ ...prev,[e.target.name]: e.target.value}))
-    // }
-
+    
     const handleSubmit = async (e)=> {
         e.preventDefault()
 
