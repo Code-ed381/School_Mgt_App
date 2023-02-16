@@ -43,8 +43,8 @@ const Login = ()=> {
             const accessToken = res?.data?.accessToken;
             const roles = res?.data?.roles;
             setAuth({ user, pwd, roles, accessToken })
-            setUser('')
-            setPwd('')
+            // setUser('')
+            // setPwd('')
             navigate(from, { replace: true })
         }
         catch (err){
@@ -82,6 +82,7 @@ const Login = ()=> {
                                             class="form-control" 
                                             name = "username"
                                             type="text" 
+                                            autoComplete="off"
                                             ref={userRef}
                                             required 
                                             placeholder="Username or email"
