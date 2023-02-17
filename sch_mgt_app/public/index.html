@@ -110,23 +110,70 @@
 
     <script>
   // Example starter JavaScript for disabling form submissions if there are invalid fields
-  (function() {
-      'use strict';
-      window.addEventListener('load', function() {
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          var forms = document.getElementsByClassName('needs-validation');
-          // Loop over them and prevent submission
-          var validation = Array.prototype.filter.call(forms, function(form) {
-              form.addEventListener('submit', function(event) {
-                  if (form.checkValidity() === false) {
-                      event.preventDefault();
-                      event.stopPropagation();
-                  }
-                  form.classList.add('was-validated');
-              }, false);
-          });
-      }, false);
-  })();
+      (function() {
+          'use strict';
+          window.addEventListener('load', function() {
+              // Fetch all the forms we want to apply custom Bootstrap validation styles to
+              var forms = document.getElementsByClassName('needs-validation');
+              // Loop over them and prevent submission
+              var validation = Array.prototype.filter.call(forms, function(form) {
+                  form.addEventListener('submit', function(event) {
+                      if (form.checkValidity() === false) {
+                          event.preventDefault();
+                          event.stopPropagation();
+                      }
+                      form.classList.add('was-validated');
+                  }, false);
+              });
+          }, false);
+      })();
+        </script>
+
+        <script>
+          // requires jquery
+    $(document).ready(function() {
+      (function() {
+        var showChar = 100;
+        var ellipsestext = "...";
+
+        $(".truncate").each(function() {
+          var content = $(this).html();
+          if (content.length > showChar) {
+            var c = content.substr(0, showChar);
+            var h = content;
+            var html =
+              '<div class="truncate-text" style="display:block">' +
+              c +
+              '<span class="moreellipses">' +
+              ellipsestext +
+              '&nbsp;&nbsp;<a href="" class="moreless more">more</a></span></span></div><div class="truncate-text" style="display:none">' +
+              h +
+              '<a href="" class="moreless less">Less</a></span></div>';
+
+            $(this).html(html);
+          }
+        });
+
+        $(".moreless").click(function() {
+          var thisEl = $(this);
+          var cT = thisEl.closest(".truncate-text");
+          var tX = ".truncate-text";
+
+          if (thisEl.hasClass("less")) {
+            cT.prev(tX).toggle();
+            cT.slideToggle();
+          } else {
+            cT.toggle();
+            cT.next(tX).fadeToggle();
+          }
+          return false;
+        });
+        /* end iffe */
+      })();
+
+      /* end ready */
+    });
+
     </script>
    
     

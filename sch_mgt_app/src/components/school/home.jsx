@@ -1,17 +1,14 @@
 import { Outlet, Link } from "react-router-dom";
 import Axios from "axios";
-// import { useState, useEffect } from "react";
+import { createClient } from '@supabase/supabase-js'
+import { useState, useEffect } from "react";
+
+const PROJECT_URI = 'https://pffvjutwxkszuvnsqayc.supabase.co'
+const PROJECT_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmZnZqdXR3eGtzenV2bnNxYXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjIwMTMxMDUsImV4cCI6MTk3NzU4OTEwNX0.JryH2jtpXFt-dwHAEdMVH0ykYB3cRfHXS0DKiGM1Z8c'
+
+const supabase = createClient(PROJECT_URI, PROJECT_ANON)
 
 function Home() {
-    // const [username, setUsername] = useState('')
-    // useEffect(() => {
-    //     Axios.get('http://localhost:3001/login')
-    //     .then((res)=>{
-    //         setUsername(res.data[0].username)
-    //         console.log(res.data[0].username) 
-    //     })
-    // }, [])
-
     const logout = async (e)=>  {
         e.preventDefault()
 
@@ -340,6 +337,11 @@ function Home() {
                                     <li><a href="javascript:void(0)"><i className="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
                             </li>
+                            <li className="nav-small-cap">--- CHURCH APP</li>
+                            <li> <Link className="waves-effect waves-dark" to="admin"><i className="icon-user"></i><span className="hide-menu">Events</span></Link></li>
+                            <li> <Link className="waves-effect waves-dark" to="students"><i className="icon-people"></i><span className="hide-menu">Users</span></Link></li>
+                            <li> <Link className="waves-effect waves-dark" to="users"><i className="icon-people"></i><span className="hide-menu">Sponsers</span></Link></li>
+
                             <li className="nav-small-cap">--- ADMIN</li>
                             <li> <Link className="waves-effect waves-dark" to="admin"><i className="icon-user"></i><span className="hide-menu">Admin</span></Link></li>
                             <li> <Link className="waves-effect waves-dark" to="students"><i className="icon-people"></i><span className="hide-menu">Students</span></Link></li>
