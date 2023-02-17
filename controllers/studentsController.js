@@ -52,7 +52,7 @@ const updateStudent = async (req, res) => {
     const result = await student.save();
     res.json(result)
 }
-
+ 
 const deleteStudent = async (req, res) => {
     if (!req?.body?.id) return res.status(400).json({ 'message': 'Student ID required' })
 
