@@ -1,16 +1,25 @@
 import React from "react";
 import { useState, createContext, useContext } from "react";
-import SignUp from './components/register';
-import Recover from './components/forgot_pwd';
-import Login from "./components/login";
-import Students from "./components/students";
-import Users from "./components/users";
-import Profile from "./components/profile";
-import Home from "./components/home";
-import Dashboard from "./components/dashboard";
-import Admin from "./components/admin";
-import Unauthorized from "./components/unauthorized";
-import RequireAuth from './components/requireAuth'
+// School App
+import SignUp from './components/school/register';
+import Recover from './components/school/forgot_pwd';
+import Login from "./components/school/login";
+import Students from "./components/school/students";
+import Users from "./components/school/users";
+import Profile from "./components/school/profile";
+import Home from "./components/school/home";
+import Dashboard from "./components/school/dashboard";
+import Admin from "./components/school/admin";
+import Unauthorized from "./components/school/unauthorized";
+import RequireAuth from './components/school/requireAuth'
+
+//Church App
+import Events from './components/church/Events'
+import EventSponsors from './components/church/Sponsors' 
+import EventAppUsers from './components/church/Users' 
+
+
+
 import { Routes, Route } from "react-router-dom";
 
 
@@ -24,9 +33,10 @@ const App = ()=> {
       <Route path="forgot-password" element={<Recover/>}/>
 
       <Route path="/" element={<Home />}>
-        <Route element={<RequireAuth allowedRoles={[2001]}/>}>
-          <Route path="/" element={<Home/>}/>
-        </Route>
+        <Route path="/events" element={<Events/>} />
+        <Route path="/sponsors" element={<EventSponsors/>} />
+        <Route path="/addevent" element={<Home/>}/>
+        <Route path="/eventusers" element={<EventAppUsers/>}/>
 
         <Route element={<RequireAuth allowedRoles={[1984, 5150]}/>}>
           <Route path="profile" element={<Profile/>}/>

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { Link } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 
 
-const Users = () => {
+const AddEvent = () => {
     const [users, setUsers] = useState([]);
     const axiosPrivate = useAxiosPrivate()
     const { auth } = useAuth()
@@ -167,4 +167,4 @@ const Users = () => {
 }
 
 
-export default Users;
+export default AddEvent;
