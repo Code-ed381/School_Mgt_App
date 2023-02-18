@@ -338,9 +338,12 @@ function Home() {
                                 </ul>
                             </li>
                             <li className="nav-small-cap">--- CHURCH APP</li>
-                            <li> <Link className="waves-effect waves-dark" to="admin"><i className="icon-user"></i><span className="hide-menu">Events</span></Link></li>
-                            <li> <Link className="waves-effect waves-dark" to="students"><i className="icon-people"></i><span className="hide-menu">Users</span></Link></li>
-                            <li> <Link className="waves-effect waves-dark" to="users"><i className="icon-people"></i><span className="hide-menu">Sponsers</span></Link></li>
+                            <li> <Link className="waves-effect waves-dark" to="admin"><i className="icon-speedometer"></i><span className="hide-menu">Dashboard</span></Link></li>
+                            <li> <Link className="waves-effect waves-dark" to="eventappusers"><i className="ti-calendar"></i><span className="hide-menu">Events</span></Link></li>
+                            <li> <Link className="waves-effect waves-dark" to="admin"><i className=" ti-pencil-alt "></i><span className="hide-menu">Registrations</span></Link></li>
+                            <li> <Link className="waves-effect waves-dark" to="sponsors"><i className="fas fa-donate"></i><span className="hide-menu">Sponsers</span></Link></li>
+                            <li> <Link className="waves-effect waves-dark" to="users"><i className=" fas fa-dollar-sign"></i><span className="hide-menu">Contributions</span></Link></li>
+                            <li> <Link className="waves-effect waves-dark" to="eventusers"><i className="icon-people"></i><span className="hide-menu">Users</span></Link></li>
 
                             <li className="nav-small-cap">--- ADMIN</li>
                             <li> <Link className="waves-effect waves-dark" to="admin"><i className="icon-user"></i><span className="hide-menu">Admin</span></Link></li>

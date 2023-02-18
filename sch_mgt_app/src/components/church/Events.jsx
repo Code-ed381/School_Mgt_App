@@ -17,10 +17,12 @@ const EventAppUsers = () => {
     useEffect(() => {
         const controller = new AbortController();
 
-        if(!isMounted) { 
+        if(!isMounted) {
             isMounted = true
             const getCategories = async ()=> {
-                const results = await supabase.from('profile').select()
+                const results = await supabase.from('events').select(`*,
+                 categories(name)     
+                `)
                 setData(results.data)
                 console.log(results.data)
             }
@@ -46,15 +48,80 @@ const EventAppUsers = () => {
           <!-- ============================================================== --> */}
             <div class="row page-titles">
                 <div class="col-md-5 align-self-center">
-                    <h4 class="text-themecolor">Users</h4>
+                    <h4 class="text-themecolor">Events</h4>
                 </div>
                 <div class="col-md-7 align-self-center text-end">
                     <div class="d-flex justify-content-end align-items-center">
                         <ol class="breadcrumb justify-content-end">
                             <li class="breadcrumb-item"><Link to="/home">Home</Link></li>
-                            <li class="breadcrumb-item active">Users</li>
+                            <li class="breadcrumb-item active">Events</li>
                         </ol>
-                        {/* <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-plus-circle"></i> Create New Event</button> */}
+                        <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-plus-circle"></i> Create New Event</button>
+                    </div>
+                </div>
+                <div class="modal bs-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+                    <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="exampleModalLabel1">Add New Event</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail111" class="form-label">Event Name</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail111" placeholder="Enter the name of the event"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword12" class="form-label">Host</label>
+                                        <input type="text" class="form-control" id="exampleInputPassword12" placeholder="Enter the host of this event"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Category</label>
+                                        <select class="form-control form-select" data-placeholder="Choose a Category" tabindex="1">
+                                            <option><span class="text-muted">--Select the type of event--</span></option>
+                                            <option value="seminar">Seminar</option>
+                                            <option value="outreach">Outreach</option>
+                                            <option value="virtual">Virtual</option>
+                                        </select>
+                                    </div>                              
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail12" class="form-label">Location</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail12" placeholder="Enter the event destination"/>
+                                    </div>
+                                    <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="m-t-20 form-label">Date</label>
+                                            <input type="date" class="form-control mydatepicker" placeholder="2017-06-04" id="mdate"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="m-t-20 form-label">Time</label>
+                                            <input type="time" class="form-control" id="timepicker" placeholder="Check time"/>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword11" class="form-label">Phone</label>
+                                        <input type="text" class="form-control" id="exampleInputPassword11" placeholder="Enter phone number for RSVP"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword11" class="form-label">Social Media</label>
+                                        <input type="text" class="form-control" id="exampleInputPassword11" placeholder="Facebook"/>
+                                        <input type="text" class="form-control" id="exampleInputPassword11" placeholder="Youtube"/>
+                                        <input type="text" class="form-control" id="exampleInputPassword11" placeholder="Twitter"/>
+                                        <input type="text" class="form-control" id="exampleInputPassword11" placeholder="Instagram"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword12" class="form-label">Description</label>
+                                        <textarea class="form-control" id="exampleTextarea" rows="5" placeholder="Write a short description about the event"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-success me-2 text-white">Submit</button>
+                                    <button type="submit" class="btn btn-dark"  data-bs-dismiss="modal">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -71,48 +138,66 @@ const EventAppUsers = () => {
           <!-- Container fluid  -->
           <!-- ============================================================== --> */}
           <div class="container-fluid">
+  
+            {/* <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== --> */} 
+            {/* <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                        <h4 class="card-title">Users</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {data.map((data) =>  
+                                <tr key={data.id}>
+                                    <td>{data.id}</td>
+                                    <td>{data.name}</td>
+                                </tr>
+                            )}
+                            </tbody>
+
+                            
+                            
+                            
+                            
+                        </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div> */}
+
             {/* <!-- Row --> */}
                 <div class="row">
-                {/* <!-- .col --> */}
-                <div class="col-lg-12">
+                   
+                    {/* <!-- Column --> */}
+                    {data.map((data)=> 
+                    <div class="col-lg-3">
                         <div class="card">
+                            <img class="card-img-top" src={data.poster_url} alt="Card image cap" width={250} height={250}/>
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table color-table dark-table table-hover table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
-                                                <th>Username</th>
-                                                <th>Phone</th>
-                                                <th>Email</th>
-                                                <th>Address</th>
-                                                <th>Nationality</th>
-                                                <th>Role</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {data.map((data)=>
-                                                <tr>
-                                                    <td>{data.id}</td>
-                                                    <td>{data.first_name}</td>
-                                                    <td>{data.last_name}</td>
-                                                    <td>{data.username}</td>
-                                                    <td>{data.phone}</td>
-                                                    <td>{data.email}</td>
-                                                    <td>{data.address}</td>
-                                                    <td>{data.nationality}</td>
-                                                    <td><span class="label label-danger">admin</span> </td>
-                                                </tr>
-                                            )}
-                                        </tbody>
-                                    </table>
+                                <ul class="list-inline font-14">
+                                    <li class="p-l-0">{data.date}</li>
+                                    <li><a href="javascript:void(0)" class="link">3 Comment</a></li>
+                                </ul>
+                                <h6>{data.categories.name}</h6>
+                                <h3 class="font-normal">{data.name}</h3>
+                                <div class='truncate'>
+                                    <p class="m-b-0 m-t-10">{data.description}</p>
+
                                 </div>
+                                <button class="btn btn-success btn-rounded waves-effect waves-light m-t-20 text-white">Read more</button>
                             </div>
                         </div>
                     </div>
-                {/* <!-- /.col --> */}
+                    )}
                 </div>
                 {/* <!-- Row --> */}
               {/* <!-- ============================================================== -->

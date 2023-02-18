@@ -9,7 +9,7 @@ const supabase = createClient(PROJECT_URI, PROJECT_ANON)
 
 
 
-const EventAppUsers = () => {
+const EventSponsors = () => {
     const [data, setData] = useState([])
 
     let isMounted = false
@@ -20,7 +20,9 @@ const EventAppUsers = () => {
         if(!isMounted) { 
             isMounted = true
             const getCategories = async ()=> {
-                const results = await supabase.from('profile').select()
+                const results = await supabase.from('EventsSponsors').select(`*,
+                events(name),
+                sponsors(*)`)
                 setData(results.data)
                 console.log(results.data)
             }
@@ -46,13 +48,13 @@ const EventAppUsers = () => {
           <!-- ============================================================== --> */}
             <div class="row page-titles">
                 <div class="col-md-5 align-self-center">
-                    <h4 class="text-themecolor">Users</h4>
+                    <h4 class="text-themecolor">Sponsors</h4>
                 </div>
                 <div class="col-md-7 align-self-center text-end">
                     <div class="d-flex justify-content-end align-items-center">
                         <ol class="breadcrumb justify-content-end">
                             <li class="breadcrumb-item"><Link to="/home">Home</Link></li>
-                            <li class="breadcrumb-item active">Users</li>
+                            <li class="breadcrumb-item active">Sponsors</li>
                         </ol>
                         {/* <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-plus-circle"></i> Create New Event</button> */}
                     </div>
@@ -71,48 +73,70 @@ const EventAppUsers = () => {
           <!-- Container fluid  -->
           <!-- ============================================================== --> */}
           <div class="container-fluid">
+  
+            {/* <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== --> */} 
+            {/* <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                        <h4 class="card-title">Users</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {data.map((data) =>  
+                                <tr key={data.id}>
+                                    <td>{data.id}</td>
+                                    <td>{data.name}</td>
+                                </tr>
+                            )}
+                            </tbody>
+
+                            
+                            
+                            
+                            
+                        </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div> */}
+
             {/* <!-- Row --> */}
                 <div class="row">
                 {/* <!-- .col --> */}
-                <div class="col-lg-12">
+                {data.map((data) =>
+                    <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table color-table dark-table table-hover table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
-                                                <th>Username</th>
-                                                <th>Phone</th>
-                                                <th>Email</th>
-                                                <th>Address</th>
-                                                <th>Nationality</th>
-                                                <th>Role</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {data.map((data)=>
-                                                <tr>
-                                                    <td>{data.id}</td>
-                                                    <td>{data.first_name}</td>
-                                                    <td>{data.last_name}</td>
-                                                    <td>{data.username}</td>
-                                                    <td>{data.phone}</td>
-                                                    <td>{data.email}</td>
-                                                    <td>{data.address}</td>
-                                                    <td>{data.nationality}</td>
-                                                    <td><span class="label label-danger">admin</span> </td>
-                                                </tr>
-                                            )}
-                                        </tbody>
-                                    </table>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-12 text-center">
+                                        <a href="contact-detail.html"><img src={data.sponsors.logo} alt="user" class="img-circle img-responsive" style={{maxHeight: '210px'}}/></a>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h5 class="card-title m-b-0">{data.sponsors.name}</h5>
+                                        <h6 class="card-title m-b-0">{data.events.name}</h6> <small>024-758-9098</small>
+                                        <p>
+                                            <address>
+                                                {data.sponsors.email}
+                                                <br/>
+                                                {data.sponsors.website}
+                                            </address>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                {/* <!-- /.col --> */}
+                )}
+                    {/* <!-- /.col --> */}
                 </div>
                 {/* <!-- Row --> */}
               {/* <!-- ============================================================== -->
@@ -190,4 +214,4 @@ const EventAppUsers = () => {
 }
 
 
-export default EventAppUsers;
+export default EventSponsors;

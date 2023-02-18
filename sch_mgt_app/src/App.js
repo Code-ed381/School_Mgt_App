@@ -14,7 +14,9 @@ import Unauthorized from "./components/school/unauthorized";
 import RequireAuth from './components/school/requireAuth'
 
 //Church App
-import EventAppUsers from './components/church/Users'
+import Events from './components/church/Events'
+import EventSponsors from './components/church/Sponsors' 
+import EventAppUsers from './components/church/Users' 
 
 
 
@@ -31,8 +33,10 @@ const App = ()=> {
       <Route path="forgot-password" element={<Recover/>}/>
 
       <Route path="/" element={<Home />}>
-        <Route path="/eventappusers" element={<EventAppUsers/>} />
+        <Route path="/events" element={<Events/>} />
+        <Route path="/sponsors" element={<EventSponsors/>} />
         <Route path="/addevent" element={<Home/>}/>
+        <Route path="/eventusers" element={<EventAppUsers/>}/>
 
         <Route element={<RequireAuth allowedRoles={[1984, 5150]}/>}>
           <Route path="profile" element={<Profile/>}/>
